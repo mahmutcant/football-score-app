@@ -19,6 +19,7 @@
     "@react-navigation/native-stack": "^6.9.26",
     "@rneui/base": "github:react-native-elements/react-native-elements#base",
     "@rneui/themed": "^0.0.0-edge.2",
+    "axios": "^1.6.8",
     "react": "18.2.0",
     "react-native": "0.74.1",
     "react-native-axios": "^0.17.1",
