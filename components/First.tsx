@@ -1,6 +1,6 @@
 
 import { Button } from 'react-native-elements';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,14 +9,10 @@ import {
 import { Switch } from 'react-native-switch';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-const First = () => {
-  const [isLiveSelected, setIsLiveSelected] = useState(false);
+const First = ({ setIsLiveSelected, isLiveSelected }: { setIsLiveSelected: Function, isLiveSelected: boolean }) => {
   /*const buttonCheck = () => {
     console.log("butona bastı");
   }*/
-  const changeLiveSelected = () => {
-    setIsLiveSelected(!isLiveSelected);
-  };
   const styles = StyleSheet.create({
     viewTopBar: {
       flexDirection: 'row',
@@ -72,7 +68,7 @@ const First = () => {
           circleSize={30}
           activeText="LIVE"
           inActiveText="LIVE"
-          onValueChange={changeLiveSelected}
+          onValueChange={() => setIsLiveSelected()}
           value={isLiveSelected} />
       </View>
       <Button
