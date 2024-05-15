@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     safeAreaStyle: {
@@ -23,7 +23,16 @@ export const styles = StyleSheet.create({
     timeText: {
         fontSize: 16,
         color: 'black',
-        marginRight: 10,
+    },
+    timeTextContainer:{
+      flexDirection: 'column',
+      textAlign: 'center',
+      marginRight: 10,
+    },
+    minuteInfo: {
+      fontSize: 16,
+      color: 'black',
+      textAlign: 'center',
     },
     teamsContainer: {
         flexDirection: 'column',
@@ -45,6 +54,11 @@ export const styles = StyleSheet.create({
         color: 'black',
         fontSize: 16,
         fontFamily: 'notoserif',
+    },
+    liveMatchScore: {
+      color: 'red',
+      fontSize: 16,
+      fontFamily: 'notoserif',
     },
     iconButton: {
         backgroundColor:'transparent',

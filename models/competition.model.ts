@@ -5,11 +5,7 @@ export interface Events{
     tournament: Tournament;
     homeScore : Score;
     awayScore: Score;
-    time: {
-        injuryTime1: number,
-        injuryTime2: number,
-        currentPeriodStartTimestamp: number
-    };
+    time: Time;
     changes: {
         changes: string[];
         changeTimestamp: number
@@ -28,6 +24,13 @@ export interface Events{
     isEditor: boolean,
     homeTeam: Team;
     awayTeam: Team;
+    lastPeriod: string;
+    status: Status;
+}
+export interface Status{
+    code: number,
+    description: string,
+    type: string,
 }
 export interface Tournament{
     name: string;
@@ -118,4 +121,13 @@ export interface Score{
     period1: number,
     period2: number,
     normaltime: number;
+}
+
+export interface Time{
+    injuryTime1?: number,
+    injuryTime2?: number,
+    initial? : number,
+    max?: number,
+    extra?: number,
+    currentPeriodStartTimestamp: number
 }
