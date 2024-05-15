@@ -1,35 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import First from './First';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, ScrollView, View } from 'react-native';
 import { Button, Image, Text } from 'react-native-elements';
 import { getLiveMatchList, getMatchList } from '../services/Competition.service';
 import { Events } from '../models/competition.model';
 import { convertEpochToDate } from '../helper/utils';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { useSelector } from 'react-redux';
+import { styles } from './Styles/Styles';
 
 const CompetitionList = () => {
     const [competitions, setCompetitions] = useState<Events[]>();
-    const [isLiveSelected, setIsLiveSelected] = useState(false);
-    const changeLiveSelected = () => {
-        setIsLiveSelected(!isLiveSelected);
-      };
+    const isLiveSelected = useSelector((state:any) => state.customReducer.isLiveSelected);
     useEffect(() => {
         if(isLiveSelected){
             getLiveMatchList().then((data) => {
                 const newData = data.filter(item => item.hasEventPlayerStatistics);
                 setCompetitions(newData);
-            });
+        });
         }
         else{
             getMatchList().then((data) => {
-                setCompetitions(data);
+                const newData = data.filter(item => item.hasEventPlayerStatistics);
+                setCompetitions(newData);
             });
         }
     }, [isLiveSelected]);
     return (
         <SafeAreaView style={styles.safeAreaStyle}>
-            <First setIsLiveSelected={changeLiveSelected} isLiveSelected={isLiveSelected}/>
+            <First/>
             <ScrollView contentContainerStyle={styles.scrollViewStyle}>
                 {competitions?.map((filteredItem) => {
                     const date = convertEpochToDate(filteredItem.startTimestamp);
@@ -78,66 +78,6 @@ const CompetitionList = () => {
         </SafeAreaView>
     );
 };
-const styles = StyleSheet.create({
-    safeAreaStyle: {
-        flex: 1,
-    },
-    scrollViewStyle: {
-        padding: 10,
-    },
-    containerSubMatchInfo: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingVertical: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
-    },
-    subMatchTeamsContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        flex: 1,
-    },
-    timeText: {
-        fontSize: 16,
-        color: 'black',
-        marginRight: 10,
-    },
-    teamsContainer: {
-        flexDirection: 'column',
-        marginRight: 10,
-        flex: 1,
-    },
-    subMatchTeams: {
-        color: 'black',
-        fontSize: 16,
-        fontFamily: 'notoserif',
-        marginVertical: 2,
-    },
-    matchScoreContainer: {
-        flexDirection: 'column',
-        alignItems: 'flex-end',
-        alignSelf: 'flex-end',
-    },
-    matchScore: {
-        color: 'black',
-        fontSize: 16,
-        fontFamily: 'notoserif',
-    },
-    iconButton: {
-        backgroundColor:'transparent',
-        paddingEnd: 5,
-    },
-    iconStyle:{
-        color: 'gray',
-        fontSize: 45,
-        paddingEnd: 3,
-    },
-    teamIcon : {
-        width: 20,
-        height: 20,
-        marginRight: 5,
-    },
-});
+
 
 export default CompetitionList;

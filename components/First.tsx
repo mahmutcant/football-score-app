@@ -1,83 +1,50 @@
 
 import { Button } from 'react-native-elements';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  StyleSheet,
   Text,
   View,
 } from 'react-native';
 import { Switch } from 'react-native-switch';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-const First = ({ setIsLiveSelected, isLiveSelected }: { setIsLiveSelected: Function, isLiveSelected: boolean }) => {
-  /*const buttonCheck = () => {
-    console.log("butona bastı");
-  }*/
-  const styles = StyleSheet.create({
-    viewTopBar: {
-      flexDirection: 'row',
-      height: 60,
-      backgroundColor: '#2C3EC4',
-      alignItems: 'center',
-    },
-    textTopBar: {
-      fontSize: 16,
-      color: '#fff',
-      padding: 10,
-    },
-    container: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      flex: 1,
-    },
-    switch: {
-      alignSelf: 'flex-end',
-    },
-    inactiveTextStyle: {
-      color: 'red',
-      fontSize: 11,
-    },
-    activeTextStyle: {
-      color: 'white',
-      fontSize: 11,
-    },
-    iconButton: {
-      backgroundColor:'transparent',
-      paddingEnd: 30,
-    },
-    iconStyle:{
-      color: 'white',
-      fontSize: 45,
-      paddingEnd: 10,
-    },
-  });
+import { useDispatch} from 'react-redux';
+import { dispatchIsLiveSelected } from '../redux/actions';
+import { firstComponentStyles } from './Styles/Styles';
+const First = () => {
+  const [isLiveSelected, setIsLiveSelected] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(dispatchIsLiveSelected(isLiveSelected));
+  }, [isLiveSelected,dispatch]);
+  
   return (
     <View
-      style={styles.viewTopBar}>
+      style={firstComponentStyles.viewTopBar}>
       <Text
-        style={styles.textTopBar}>
+        style={firstComponentStyles.textTopBar}>
         Futbol Canlı Skorlar
       </Text>
-      <View style={styles.container}>
+      <View style={firstComponentStyles.container}>
         <Switch
           backgroundActive="red"
-          inactiveTextStyle={styles.inactiveTextStyle}
-          activeTextStyle={styles.activeTextStyle}
+          inactiveTextStyle={firstComponentStyles.inactiveTextStyle}
+          activeTextStyle={firstComponentStyles.activeTextStyle}
           backgroundInactive="white"
           barHeight={25}
           circleSize={30}
           activeText="LIVE"
           inActiveText="LIVE"
-          onValueChange={() => setIsLiveSelected()}
+          onValueChange={(value) => setIsLiveSelected(value)}
           value={isLiveSelected} />
       </View>
       <Button
           onPress={() => console.log('search')}
-          buttonStyle={styles.iconButton}
+          buttonStyle={firstComponentStyles.iconButton}
           icon={
             <FontAwesomeIcon
               icon={faSearch}
-              style={styles.iconStyle}
+              style={firstComponentStyles.iconStyle}
             />
           }
         />
