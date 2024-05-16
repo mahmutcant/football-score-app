@@ -34,6 +34,11 @@ export const styles = StyleSheet.create({
       color: 'black',
       textAlign: 'center',
     },
+    liveMinuteInfo: {
+      fontSize: 16,
+      color: '#CB1818',
+      textAlign: 'center',
+    },
     teamsContainer: {
         flexDirection: 'column',
         marginRight: 10,
