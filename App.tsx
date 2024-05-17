@@ -12,7 +12,13 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CompetitionList from './components/CompetitionList';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-const Stack = createNativeStackNavigator();
+import SelectedCompetition from './components/SelectedCompetition';
+type RootStackParamList = {
+  Home: undefined;
+  SelectedCompetition: { itemId: number };
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 function App(): React.JSX.Element {
   StatusBar.setBackgroundColor('#2C3EC4');
   return (
@@ -20,6 +26,7 @@ function App(): React.JSX.Element {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen options={{headerShown: false}} name="Home" component={CompetitionList}/>
+          <Stack.Screen options={{headerShown: false}} name="SelectedCompetition"  component={SelectedCompetition}/>
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

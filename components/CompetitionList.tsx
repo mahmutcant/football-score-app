@@ -9,10 +9,19 @@ import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useSelector } from 'react-redux';
 import { styles } from './Styles/Styles';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+type RootStackParamList = {
+    Home: undefined;
+    SelectedCompetition: { itemId: number };
+  };
 
+  type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 const CompetitionList = () => {
     const [competitions, setCompetitions] = useState<Events[]>();
     const isLiveSelected = useSelector((state: any) => state.customReducer.isLiveSelected);
+
+    const navigation = useNavigation<HomeScreenNavigationProp>();
     const fetchLiveMatches = async () => {
         try {
             const data = await getLiveMatchList();
@@ -46,7 +55,7 @@ const CompetitionList = () => {
 
         const intervalId = setInterval(() => {
             fetchData();
-        }, 10000);
+        }, 9999999999);
 
         return () => clearInterval(intervalId);
     }, [isLiveSelected]);
@@ -61,7 +70,7 @@ const CompetitionList = () => {
                         <TouchableHighlight
                             activeOpacity={0.6}
                             underlayColor ="#DDDDDD"
-                            onPress={() => console.log(filteredItem.id)}>
+                            onPress={() => navigation.navigate('SelectedCompetition', { itemId: filteredItem.id })}>
                             <View key={filteredItem.id} style={styles.containerSubMatchInfo}>
                                 <View style={styles.subMatchTeamsContainer}>
                                     <View style={styles.timeTextContainer}>
@@ -93,7 +102,7 @@ const CompetitionList = () => {
                                             <Text style={filteredItem.status.code === 100 ? styles.matchScore : styles.liveMatchScore}>{filteredItem.homeScore.display}</Text>
                                             <Text style={filteredItem.status.code === 100 ? styles.matchScore : styles.liveMatchScore}>{filteredItem.awayScore.display}</Text>
                                         </View>
-                                    ) : <View style={styles.matchScoreContainer}></View>}
+                                    ) : null}
                                     <Button
                                         buttonStyle={styles.iconButton}
                                         onPress={() => console.log('search')}

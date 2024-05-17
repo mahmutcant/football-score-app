@@ -17,6 +17,7 @@
     "@fortawesome/react-native-fontawesome": "^0.3.0",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
+    "@react-navigation/stack": "^6.3.29",
     "@rneui/base": "github:react-native-elements/react-native-elements#base",
     "@rneui/themed": "^0.0.0-edge.2",
     "axios": "^1.6.8",
