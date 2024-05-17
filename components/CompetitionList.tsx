@@ -17,6 +17,7 @@ type RootStackParamList = {
   };
 
   type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+  const leagueOrder = ['trendyol-super-lig','premier-league', 'laliga', 'bundesliga', 'serie-a'];
 const CompetitionList = () => {
     const [competitions, setCompetitions] = useState<Events[]>();
     const isLiveSelected = useSelector((state: any) => state.customReducer.isLiveSelected);
@@ -31,6 +32,15 @@ const CompetitionList = () => {
             console.error('Error fetching live matches:', error);
         }
     };
+
+    const compareByLeagueOrder = (a:Events, b:Events) => {
+        const indexA = leagueOrder.indexOf(a.tournament.slug);
+        const indexB = leagueOrder.indexOf(b.tournament.slug);
+        if (indexA === -1) return 1;
+        if (indexB === -1) return -1;
+
+        return indexA - indexB;
+      };
 
     const fetchTodayMatches = async () => {
         try {
@@ -64,7 +74,7 @@ const CompetitionList = () => {
         <SafeAreaView style={styles.safeAreaStyle}>
             <First />
             <ScrollView contentContainerStyle={styles.scrollViewStyle}>
-                {competitions?.map((filteredItem) => {
+                {competitions?.sort(compareByLeagueOrder).map((filteredItem) => {
                     const date = convertEpochToDate(filteredItem.startTimestamp);
                     return (
                         <TouchableHighlight

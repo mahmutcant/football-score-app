@@ -9,7 +9,7 @@ export const getTodayDate = () => {
 };
 
 export const convertEpochToDate = (unix_timestamp: number) => {
-    const date = new Date((unix_timestamp + 10800) * 1000);
+    const date = new Date((unix_timestamp) * 1000);
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
@@ -34,4 +34,4 @@ export const getMatchMinutesInfo = (currentPeriodStartTimestamp:Time, lastPeriod
         return elapsedTimeMinutes + 45 > 90 ? '90+' : elapsedTimeMinutes + 46;
     }
     return elapsedTimeMinutes >= 45 ? '45+' : elapsedTimeMinutes;
-  };
+};
