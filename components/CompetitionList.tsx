@@ -4,7 +4,7 @@ import { SafeAreaView, ScrollView, TouchableHighlight, View } from 'react-native
 import { Button, Image, Text } from 'react-native-elements';
 import { getLiveMatchList, getMatchList, getTeamIcon } from '../services/Competition.service';
 import { Events } from '../models/competition.model';
-import { convertEpochToDate, getMatchMinutesInfo, getTodayDate } from '../helper/utils';
+import { compareByLeagueOrder, convertEpochToDate, getStatusByCode, isCompetitionLive } from '../helper/utils';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useSelector } from 'react-redux';
@@ -16,8 +16,8 @@ type RootStackParamList = {
     SelectedCompetition: { itemId: number };
   };
 
-  type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
-  const leagueOrder = ['trendyol-super-lig','premier-league', 'laliga', 'bundesliga', 'serie-a'];
+type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+
 const CompetitionList = () => {
     const [competitions, setCompetitions] = useState<Events[]>();
     const isLiveSelected = useSelector((state: any) => state.customReducer.isLiveSelected);
@@ -26,27 +26,17 @@ const CompetitionList = () => {
     const fetchLiveMatches = async () => {
         try {
             const data = await getLiveMatchList();
-            const newData = data.filter(item => item.hasEventPlayerStatistics);
-            setCompetitions(newData);
+            setCompetitions(data);
         } catch (error) {
             console.error('Error fetching live matches:', error);
         }
     };
 
-    const compareByLeagueOrder = (a:Events, b:Events) => {
-        const indexA = leagueOrder.indexOf(a.tournament.slug);
-        const indexB = leagueOrder.indexOf(b.tournament.slug);
-        if (indexA === -1) return 1;
-        if (indexB === -1) return -1;
-
-        return indexA - indexB;
-      };
-
     const fetchTodayMatches = async () => {
         try {
             const data = await getMatchList();
-            const newData = data.filter(item => item.hasEventPlayerStatistics && convertEpochToDate(item.startTimestamp).day === getTodayDate().day);
-            setCompetitions(newData);
+            //const newData = data.filter(item => convertEpochToDate(item.startTimestamp).day === getTodayDate().day);
+            setCompetitions(data);
         } catch (error) {
             console.error('Error fetching today matches:', error);
         }
@@ -74,7 +64,7 @@ const CompetitionList = () => {
         <SafeAreaView style={styles.safeAreaStyle}>
             <First />
             <ScrollView contentContainerStyle={styles.scrollViewStyle}>
-                {competitions?.sort(compareByLeagueOrder).map((filteredItem) => {
+                {competitions?.slice(0,100).sort(compareByLeagueOrder).map((filteredItem) => {
                     const date = convertEpochToDate(filteredItem.startTimestamp);
                     return (
                         <TouchableHighlight
@@ -87,9 +77,8 @@ const CompetitionList = () => {
                                         <Text style={styles.timeText}>
                                             {(date.hours >= 10 ? date.hours : '0' + date.hours) + ':' + date.minutes}
                                         </Text>
-                                        <Text style={filteredItem.status.code === 100 ? styles.minuteInfo : styles.liveMinuteInfo}>
-                                            {filteredItem.status.code ? (filteredItem.status.code === 100 ? 'MS' : filteredItem.status.code === 31 ?
-                                                'IY' : getMatchMinutesInfo(filteredItem.time, filteredItem.lastPeriod) + "'") : ''}
+                                        <Text style={isCompetitionLive(filteredItem.status.code) ? styles.liveMinuteInfo : styles.minuteInfo}>
+                                            {getStatusByCode(filteredItem)}
                                         </Text>
                                     </View>
                                     <View style={styles.teamsContainer}>
@@ -109,8 +98,8 @@ const CompetitionList = () => {
                                     {(filteredItem.homeScore.display !== null && filteredItem.homeScore.display !== undefined) ||
                                         (filteredItem.awayScore.display !== null && filteredItem.awayScore.display !== undefined) ? (
                                         <View style={styles.matchScoreContainer}>
-                                            <Text style={filteredItem.status.code === 100 ? styles.matchScore : styles.liveMatchScore}>{filteredItem.homeScore.display}</Text>
-                                            <Text style={filteredItem.status.code === 100 ? styles.matchScore : styles.liveMatchScore}>{filteredItem.awayScore.display}</Text>
+                                            <Text style={filteredItem.status.code === 100 || 60 ? styles.matchScore : styles.liveMatchScore}>{filteredItem.homeScore.display}</Text>
+                                            <Text style={filteredItem.status.code === 100 || 60 ? styles.matchScore : styles.liveMatchScore}>{filteredItem.awayScore.display}</Text>
                                         </View>
                                     ) : null}
                                     <Button
