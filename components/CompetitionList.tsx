@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { styles } from './Styles/Styles';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import BottomBar from './BottomBar';
 type RootStackParamList = {
     Home: undefined;
     SelectedCompetition: { itemId: number };
@@ -118,6 +119,7 @@ const CompetitionList = () => {
                     );
                 })}
             </ScrollView>
+            <BottomBar />
         </SafeAreaView>
     );
 };

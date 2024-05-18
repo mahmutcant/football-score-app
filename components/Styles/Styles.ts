@@ -119,3 +119,36 @@ export const firstComponentStyles = StyleSheet.create({
       paddingEnd: 10,
     },
   });
+
+export const bottomBarStyles = StyleSheet.create({
+  viewBottomBar: {
+      height: 60,
+      backgroundColor: '#fff',
+      justifyContent: 'center',
+  },
+  iconButtonContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      height: '100%',
+  },
+  iconButtonItem: {
+      flexDirection: 'column',
+      alignItems: 'center',
+  },
+  iconButtonText: {
+      fontSize: 16,
+      color: '#000',
+      marginTop: 5,
+  },
+  container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+  stick: {
+    width: '50%',
+    borderBottomWidth: 2,
+    borderBottomColor: '#374EF6',
+},
+});
