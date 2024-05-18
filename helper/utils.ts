@@ -36,7 +36,7 @@ export const getMatchMinutesInfo = (currentPeriodStartTimestamp:Time, lastPeriod
     return elapsedTimeMinutes >= 45 ? '45+' : elapsedTimeMinutes;
 };
 
-const leagueOrder = ['trendyol-super-lig','premier-league', 'laliga', 'bundesliga', 'serie-a'];
+const leagueOrder = ['trendyol-super-lig','premier-league', 'laliga','serie-a', 'bundesliga','ligue-1'];
 
 export const compareByLeagueOrder = (a:Events, b:Events) => {
     const indexA = leagueOrder.indexOf(a.tournament.slug);

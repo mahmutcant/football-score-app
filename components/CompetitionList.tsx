@@ -4,7 +4,7 @@ import { SafeAreaView, ScrollView, TouchableHighlight, View } from 'react-native
 import { Button, Image, Text } from 'react-native-elements';
 import { getLiveMatchList, getMatchList, getTeamIcon } from '../services/Competition.service';
 import { Events } from '../models/competition.model';
-import { compareByLeagueOrder, convertEpochToDate, getStatusByCode, isCompetitionLive } from '../helper/utils';
+import { compareByLeagueOrder, convertEpochToDate, getStatusByCode, getTodayDate, isCompetitionLive } from '../helper/utils';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useSelector } from 'react-redux';
@@ -35,8 +35,8 @@ const CompetitionList = () => {
     const fetchTodayMatches = async () => {
         try {
             const data = await getMatchList();
-            //const newData = data.filter(item => convertEpochToDate(item.startTimestamp).day === getTodayDate().day);
-            setCompetitions(data);
+            const newData = data.filter(item => convertEpochToDate(item.startTimestamp).day === getTodayDate().day);
+            setCompetitions(newData);
         } catch (error) {
             console.error('Error fetching today matches:', error);
         }
@@ -98,8 +98,8 @@ const CompetitionList = () => {
                                     {(filteredItem.homeScore.display !== null && filteredItem.homeScore.display !== undefined) ||
                                         (filteredItem.awayScore.display !== null && filteredItem.awayScore.display !== undefined) ? (
                                         <View style={styles.matchScoreContainer}>
-                                            <Text style={filteredItem.status.code === 100 || 60 ? styles.matchScore : styles.liveMatchScore}>{filteredItem.homeScore.display}</Text>
-                                            <Text style={filteredItem.status.code === 100 || 60 ? styles.matchScore : styles.liveMatchScore}>{filteredItem.awayScore.display}</Text>
+                                            <Text style={isCompetitionLive(filteredItem.status.code) ? styles.liveMatchScore : styles.matchScore}>{filteredItem.homeScore.display}</Text>
+                                            <Text style={isCompetitionLive(filteredItem.status.code) ? styles.liveMatchScore : styles.matchScore}>{filteredItem.awayScore.display}</Text>
                                         </View>
                                     ) : null}
                                     <Button
