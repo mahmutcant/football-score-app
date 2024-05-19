@@ -67,7 +67,7 @@ export const getStatusByCode = (event:Events) => {
 };
 
 export const isCompetitionLive = (statusCode:number) => {
-    if(statusCode === 100 || statusCode === 60){
+    if(statusCode === 100 || statusCode === 60 || statusCode === 0){
         return false;
     }
     return true;

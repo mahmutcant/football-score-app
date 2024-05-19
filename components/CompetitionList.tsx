@@ -5,7 +5,7 @@ import { Button, Image, Text } from 'react-native-elements';
 import { getLiveMatchList, getMatchList, getTeamIcon } from '../services/Competition.service';
 import { Events } from '../models/competition.model';
 import { compareByLeagueOrder, convertEpochToDate, getStatusByCode, getTodayDate, isCompetitionLive } from '../helper/utils';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faChartSimple } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useSelector } from 'react-redux';
 import { styles } from './Styles/Styles';
@@ -24,7 +24,11 @@ const CompetitionList = () => {
     const [competitions, setCompetitions] = useState<Events[]>();
     const todayDate = getTodayDate();
     const isLiveSelected = useSelector((state: any) => state.customReducer.isLiveSelected);
-
+    const error = console.error;
+    console.error = (...args: any) => {
+      if (/defaultProps/.test(args[0])) return;
+      error(...args);
+    };
     const navigation = useNavigation<HomeScreenNavigationProp>();
     const fetchLiveMatches = async () => {
         try {
@@ -93,13 +97,19 @@ const CompetitionList = () => {
                                                 source={{ uri: getTeamIcon(filteredItem.homeTeam.id) }} />
                                             {filteredItem.homeTeam.shortName}
                                         </Text>
-                                        <Text style={styles.subMatchTeams}>
+                                        <Text style={isCompetitionLive(filteredItem.status.code) ? styles.liveSubMatchTeams : styles.subMatchTeams}>
                                             <Image
                                                 style={styles.teamIcon}
                                                 source={{ uri: getTeamIcon(filteredItem.awayTeam.id) }} />
                                             {filteredItem.awayTeam.shortName}
                                         </Text>
                                     </View>
+                                    {filteredItem.hasEventPlayerStatistics && <FontAwesomeIcon
+                                        style={styles.statisticIcon}
+                                        icon={faChartSimple}
+                                        color='green'
+                                        
+                                    />}
                                     {(filteredItem.homeScore.display !== null && filteredItem.homeScore.display !== undefined) ||
                                         (filteredItem.awayScore.display !== null && filteredItem.awayScore.display !== undefined) ? (
                                         <View style={styles.matchScoreContainer}>

@@ -50,6 +50,12 @@ export const styles = StyleSheet.create({
         fontFamily: 'notoserif',
         marginVertical: 2,
     },
+    liveSubMatchTeams: {
+      color: 'red',
+      fontSize: 16,
+      fontFamily: 'notoserif',
+      marginVertical: 2,
+  },
     matchScoreContainer: {
         flexDirection: 'column',
         alignItems: 'flex-end',
@@ -79,6 +85,9 @@ export const styles = StyleSheet.create({
         height: 20,
         marginRight: 5,
     },
+    statisticIcon:{
+      marginEnd: 15,
+    }
 });
 
 export const firstComponentStyles = StyleSheet.create({
