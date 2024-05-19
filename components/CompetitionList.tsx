@@ -22,7 +22,7 @@ type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 const CompetitionList = () => {
     const [competitions, setCompetitions] = useState<Events[]>();
-    const todayDate = getTodayDate().day;
+    const todayDate = getTodayDate();
     const isLiveSelected = useSelector((state: any) => state.customReducer.isLiveSelected);
 
     const navigation = useNavigation<HomeScreenNavigationProp>();
@@ -37,8 +37,8 @@ const CompetitionList = () => {
 
     const fetchTodayMatches = async () => {
         try {
-            const data = await getMatchList();
-            const newData = data.filter(item => convertEpochToDate(item.startTimestamp).day === todayDate);
+            const data = await getMatchList(todayDate);
+            const newData = data.filter(item => convertEpochToDate(item.startTimestamp).day === todayDate.day);
             setCompetitions(newData);
         } catch (error) {
             console.error('Error fetching today matches:', error);
