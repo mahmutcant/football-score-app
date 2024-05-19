@@ -5,7 +5,7 @@ import { Button, Image, Text } from 'react-native-elements';
 import { getLiveMatchList, getMatchList, getTeamIcon } from '../services/Competition.service';
 import { Events } from '../models/competition.model';
 import { compareByLeagueOrder, convertEpochToDate, getStatusByCode, getTodayDate, isCompetitionLive } from '../helper/utils';
-import { faBell, faChartSimple } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faChartSimple, faSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { useSelector } from 'react-redux';
 import { styles } from './Styles/Styles';
@@ -91,7 +91,7 @@ const CompetitionList = () => {
                                         </Text>
                                     </View>
                                     <View style={styles.teamsContainer}>
-                                        <Text style={styles.subMatchTeams}>
+                                        <Text style={isCompetitionLive(filteredItem.status.code) ? styles.liveSubMatchTeams : styles.subMatchTeams}>
                                             <Image
                                                 style={styles.teamIcon}
                                                 source={{ uri: getTeamIcon(filteredItem.homeTeam.id) }} />

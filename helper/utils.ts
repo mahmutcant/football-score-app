@@ -6,7 +6,6 @@ export interface DateInformation{
 }
 export const getTodayDate = (): DateInformation => {
     const today = new Date();
-    console.log(today);
     const day = today.getDate();
     const month = today.getMonth() + 1;
     const year = today.getFullYear();
@@ -41,7 +40,7 @@ export const getMatchMinutesInfo = (currentPeriodStartTimestamp:Time, lastPeriod
     return elapsedTimeMinutes >= 45 ? '45+' : elapsedTimeMinutes;
 };
 
-const leagueOrder = ['trendyol-super-lig','premier-league', 'laliga','serie-a', 'bundesliga','ligue-1'];
+const leagueOrder = ['trendyol-super-lig','premier-league', 'laliga','serie-a', 'bundesliga','ligue-1','eredivisie','stoiximan-super-league'];
 
 export const compareByLeagueOrder = (a:Events, b:Events) => {
     const indexA = leagueOrder.indexOf(a.tournament.slug);
