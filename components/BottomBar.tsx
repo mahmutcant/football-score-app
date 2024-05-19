@@ -22,7 +22,7 @@ const BottomBar = () => {
             <View style={bottomBarStyles.iconButtonContainer}>
                 {bottomBarElements.map((item,index) => (
                     <View key={index} style={bottomBarStyles.iconButtonItem}>
-                        <FontAwesomeIcon icon={item.icon} color={item.isSelected ? "#374EF6" : "gray"} size={20} />
+                        <FontAwesomeIcon icon={item.icon} color={item.isSelected ? '#374EF6' : 'gray'} size={20} />
                         <Text style={bottomBarStyles.iconButtonText}>{item.text}</Text>
                         {item.isSelected && <View style={bottomBarStyles.stick}></View>}
                     </View>))}
