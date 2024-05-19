@@ -1,7 +1,12 @@
 import { Events, Time } from "../models/competition.model";
-
-export const getTodayDate = () => {
+export interface DateInformation{
+    day:number;
+    month:number;
+    year:number;
+}
+export const getTodayDate = (): DateInformation => {
     const today = new Date();
+    console.log(today);
     const day = today.getDate();
     const month = today.getMonth() + 1;
     const year = today.getFullYear();

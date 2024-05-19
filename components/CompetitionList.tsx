@@ -12,6 +12,7 @@ import { styles } from './Styles/Styles';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import BottomBar from './BottomBar';
+
 type RootStackParamList = {
     Home: undefined;
     SelectedCompetition: { itemId: number };
@@ -21,6 +22,7 @@ type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 const CompetitionList = () => {
     const [competitions, setCompetitions] = useState<Events[]>();
+    const todayDate = getTodayDate().day;
     const isLiveSelected = useSelector((state: any) => state.customReducer.isLiveSelected);
 
     const navigation = useNavigation<HomeScreenNavigationProp>();
@@ -36,7 +38,7 @@ const CompetitionList = () => {
     const fetchTodayMatches = async () => {
         try {
             const data = await getMatchList();
-            const newData = data.filter(item => convertEpochToDate(item.startTimestamp).day === getTodayDate().day);
+            const newData = data.filter(item => convertEpochToDate(item.startTimestamp).day === todayDate);
             setCompetitions(newData);
         } catch (error) {
             console.error('Error fetching today matches:', error);
@@ -59,16 +61,18 @@ const CompetitionList = () => {
         }, 9999999999);
 
         return () => clearInterval(intervalId);
-    }, [isLiveSelected]);
+    }, [// eslint-disable-line react-hooks/exhaustive-deps
+        isLiveSelected]);
 
     return (
         <SafeAreaView style={styles.safeAreaStyle}>
             <First />
             <ScrollView contentContainerStyle={styles.scrollViewStyle}>
-                {competitions?.slice(0,100).sort(compareByLeagueOrder).map((filteredItem) => {
+                {competitions?.slice(0,100).sort(compareByLeagueOrder).map((filteredItem,item) => {
                     const date = convertEpochToDate(filteredItem.startTimestamp);
                     return (
                         <TouchableHighlight
+                            key={item}
                             activeOpacity={0.6}
                             underlayColor ="#DDDDDD"
                             onPress={() => navigation.navigate('SelectedCompetition', { itemId: filteredItem.id })}>
