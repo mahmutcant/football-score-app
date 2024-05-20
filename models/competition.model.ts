@@ -73,6 +73,7 @@ export interface UniqueTournament{
     name: string;
     slug: string;
     category: Category;
+    id: number;
 }
 
 export interface Season{

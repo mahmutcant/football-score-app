@@ -40,13 +40,12 @@ export const getMatchMinutesInfo = (currentPeriodStartTimestamp:Time, lastPeriod
     return elapsedTimeMinutes >= 45 ? '45+' : elapsedTimeMinutes;
 };
 
-const leagueOrder = ['trendyol-super-lig','premier-league', 'laliga','serie-a', 'bundesliga','ligue-1','eredivisie','stoiximan-super-league'];
-
+const leagueOrder = [52,98,17,8,35,23,34,37,325];
 export const compareByLeagueOrder = (a:Events, b:Events) => {
-    const indexA = leagueOrder.indexOf(a.tournament.slug);
-    const indexB = leagueOrder.indexOf(b.tournament.slug);
-    if (indexA === -1) return 1;
-    if (indexB === -1) return -1;
+    const indexA = leagueOrder.indexOf(a.tournament.uniqueTournament?.id);
+    const indexB = leagueOrder.indexOf(b.tournament.uniqueTournament?.id);
+    if (indexA && indexA === -1) return 1;
+    if (indexB && indexB === -1) return -1;
     return indexA - indexB;
 };
 

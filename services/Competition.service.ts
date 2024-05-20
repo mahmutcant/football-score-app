@@ -22,6 +22,17 @@ export const getLiveMatchList = async(): Promise<Events[]> => {
     }
 };
 
-export const getTeamIcon = (teamId:number): string => {
-    return `https://api.sofascore.app/api/v1/team/${teamId}/image/small`;
+export const getTeamIcon = (teamId:number | undefined): string|undefined => {
+    if(teamId){
+        return `https://api.sofascore.app/api/v1/team/${teamId}/image/small`;
+    }
 };
+
+export const getSelectedCompetitionDetail = async(competitionId:number) : Promise<Events> => {
+    try{
+        const response = await axios.get(`https://www.sofascore.com/api/v1/event/${competitionId}`)
+        return response.data.event;
+    }catch (error){
+        throw error;
+    }
+}

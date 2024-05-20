@@ -161,3 +161,35 @@ export const bottomBarStyles = StyleSheet.create({
     borderBottomColor: '#374EF6',
 },
 });
+
+export const selectedCompetitionStyles = StyleSheet.create({
+  parentContainer: {
+    flex: 1,
+    height: '40%'
+  },
+  selectedCompetitionToolbar:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding:10,
+    height: 80,
+    alignItems: 'center',
+    position: 'relative',
+  },
+  teamIcon : {
+    width: 48,
+    height: 48,
+    
+  },
+  teamInfo:{
+    alignItems:'center'
+  },
+  scoreInfo:{
+    
+  },
+  scoreInfoText: {
+    fontWeight: 'bold',
+    color:'white',
+    fontSize:25,
+    fontFamily:'sans'
+  }
+});
