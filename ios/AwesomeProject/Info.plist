@@ -50,6 +50,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>SofascoreSans-Bold.ttf</string>
+		<string>SofascoreSans-Regular.ttf</string>
 	</array>
 </dict>
 </plist>

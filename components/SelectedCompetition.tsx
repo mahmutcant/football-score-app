@@ -26,7 +26,8 @@ type Props = {
 const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
   const competitionId = route.params.itemId;
   const [selectedCompetitionInfo, setSelectedCompetitionInfo] = useState<Events>();
-  
+  const [selectedMenuItem, setSelectedMenuItem] = useState(0);
+  const menuButtons = ["Ayrıntılar", "Kadrolar", "Puan Durumu", "İstatistik", "Maçlar"];
   useEffect(() => {
     getSelectedCompetitionDetail(competitionId).then((data) => {
       setSelectedCompetitionInfo(data);
@@ -38,58 +39,56 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
       <View style={selectedCompetitionStyles.selectedCompetitionToolbar}>
         <Button
           buttonStyle={{ backgroundColor: "transparent" }}
-          icon={<FontAwesomeIcon icon={faArrowLeft} color="black"/>}
+          icon={<FontAwesomeIcon icon={faArrowLeft} color="black" />}
         />
         <View style={selectedCompetitionStyles.teamInfo}>
-        <Image
-          style={selectedCompetitionStyles.teamIcon}
-          source={{ uri: getTeamIcon(selectedCompetitionInfo?.homeTeam.id)}}/>
+          <Image
+            style={selectedCompetitionStyles.teamIcon}
+            source={{ uri: getTeamIcon(selectedCompetitionInfo?.homeTeam.id) }} />
           <Text style={selectedCompetitionStyles.teamInfoText}>{selectedCompetitionInfo?.homeTeam.name}</Text>
         </View>
         <View style={selectedCompetitionStyles.scoreInfo}>
-            <Text style={isCompetitionLive(selectedCompetitionInfo!.status.code) ? styles.liveMinuteInfo : styles.minuteInfo}>
-              {getStatusByCode(selectedCompetitionInfo!)}
-            </Text>
+          <Text style={isCompetitionLive(selectedCompetitionInfo!.status.code) ? styles.liveMinuteInfo : styles.minuteInfo}>
+            {getStatusByCode(selectedCompetitionInfo!)}
+          </Text>
           <Text style={isCompetitionLive(selectedCompetitionInfo!.status.code) ? selectedCompetitionStyles.liveScoreInfoText : selectedCompetitionStyles.scoreInfoText}>{selectedCompetitionInfo?.homeScore.display} - {selectedCompetitionInfo?.awayScore.display}</Text>
         </View>
         <View style={selectedCompetitionStyles.teamInfo}>
-        <Image
-          style={selectedCompetitionStyles.teamIcon}
-          source={{ uri: getTeamIcon(selectedCompetitionInfo?.awayTeam.id) }} />
+          <Image
+            style={selectedCompetitionStyles.teamIcon}
+            source={{ uri: getTeamIcon(selectedCompetitionInfo?.awayTeam.id) }} />
           <Text style={selectedCompetitionStyles.teamInfoText}>{selectedCompetitionInfo?.awayTeam.name}</Text>
         </View>
-        <View style={{flexDirection: 'row'}}>
-        <Button
-          buttonStyle={{ backgroundColor: "transparent" }}
-          icon={<FontAwesomeIcon icon={faShareNodes} color="black"/>}
-        />
-        <Button
-          buttonStyle={{ backgroundColor: "transparent" }}
-          icon={<FontAwesomeIcon icon={faBell} color="black"/>}
-        />
+        <View style={{ flexDirection: 'row' }}>
+          <Button
+            buttonStyle={{ backgroundColor: "transparent" }}
+            icon={<FontAwesomeIcon icon={faShareNodes} color="black" />}
+          />
+          <Button
+            buttonStyle={{ backgroundColor: "transparent" }}
+            icon={<FontAwesomeIcon icon={faBell} color="black" />}
+          />
         </View>
       </View>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-      <View style={selectedCompetitionStyles.container}>
-        <TouchableOpacity style={selectedCompetitionStyles.menuButtons} activeOpacity={1}>
-          <Text style={selectedCompetitionStyles.buttonText}>Ayrıntılar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={selectedCompetitionStyles.menuButtons} activeOpacity={1}>
-          <Text style={selectedCompetitionStyles.buttonText}>Kadrolar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={selectedCompetitionStyles.menuButtons} activeOpacity={1}>
-          <Text style={selectedCompetitionStyles.buttonText}>Puan Durumu</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={selectedCompetitionStyles.menuButtons} activeOpacity={1}>
-          <Text style={selectedCompetitionStyles.buttonText}>İstatistik</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={selectedCompetitionStyles.menuButtons} activeOpacity={1}>
-          <Text style={selectedCompetitionStyles.buttonText}>Maçlar</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+        <View style={selectedCompetitionStyles.container}>
+          {menuButtons.map((item, index) => (
+            <TouchableOpacity
+              key={item}
+              style={[
+                selectedCompetitionStyles.menuButtons,
+              ]}
+              activeOpacity={1}
+              onPress={() => setSelectedMenuItem(index)}
+            >
+              <Text style={selectedCompetitionStyles.buttonText}>{item.toUpperCase()}</Text>
+              {selectedMenuItem === index && <View style={selectedCompetitionStyles.indicator} />}
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
     </SafeAreaView>
-  ));
+    ));
 };
 
 export default SelectedCompetition;

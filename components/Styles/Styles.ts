@@ -167,8 +167,7 @@ export const selectedCompetitionStyles = StyleSheet.create({
     flexDirection: 'row',
   },
   parentContainer: {
-    flex: 1,
-    height: '40%',
+    height:'100%',
   },
   selectedCompetitionToolbar:{
     flexDirection: 'row',
@@ -213,6 +212,14 @@ export const selectedCompetitionStyles = StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontSize: 20,
+    fontSize: 15,
+    fontFamily:'SofascoreSans-Regular'
+  },
+  indicator: {
+    bottom: -2,
+    left: 0,
+    right: 0,
+    height: 2,
+    backgroundColor: 'black',
   },
 });
