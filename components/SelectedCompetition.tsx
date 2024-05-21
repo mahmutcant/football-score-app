@@ -50,7 +50,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
         <Image
           style={selectedCompetitionStyles.teamIcon}
           source={{ uri: getTeamIcon(selectedCompetitionInfo?.homeTeam.id) }} />
-          <Text style={{color:"white"}}>{selectedCompetitionInfo?.homeTeam.name}</Text>
+          <Text style={selectedCompetitionStyles.teamInfoText}>{selectedCompetitionInfo?.homeTeam.name}</Text>
         </View>
         <View style={selectedCompetitionStyles.scoreInfo}>
           <Text style={selectedCompetitionStyles.scoreInfoText}>0 - 0</Text>
@@ -59,7 +59,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
         <Image
           style={selectedCompetitionStyles.teamIcon}
           source={{ uri: getTeamIcon(selectedCompetitionInfo?.awayTeam.id) }} />
-          <Text style={{color:"white"}}>{selectedCompetitionInfo?.awayTeam.name}</Text>
+          <Text style={selectedCompetitionStyles.teamInfoText}>{selectedCompetitionInfo?.awayTeam.name}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
         <Button

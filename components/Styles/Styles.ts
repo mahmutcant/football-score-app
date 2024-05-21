@@ -181,15 +181,20 @@ export const selectedCompetitionStyles = StyleSheet.create({
     
   },
   teamInfo:{
-    alignItems:'center'
+    alignItems:'center',
+    fontFamily: 'SofascoreSans-Bold',
+    fontSize: 12,
+  },
+  teamInfoText: {
+    fontFamily:'SofascoreSans-Bold', 
+    color:"white"
   },
   scoreInfo:{
     
   },
   scoreInfoText: {
-    fontWeight: 'bold',
     color:'white',
-    fontSize:25,
-    fontFamily:'sans'
+    fontSize:28,
+    fontFamily:'SofascoreSans-Bold'
   }
 });
