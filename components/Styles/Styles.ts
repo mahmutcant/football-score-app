@@ -163,17 +163,21 @@ export const bottomBarStyles = StyleSheet.create({
 });
 
 export const selectedCompetitionStyles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+  },
   parentContainer: {
     flex: 1,
-    height: '40%'
+    height: '40%',
   },
   selectedCompetitionToolbar:{
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding:10,
-    height: 80,
+    height: "10%",
     alignItems: 'center',
     position: 'relative',
+    backgroundColor:'white'
   },
   teamIcon : {
     width: 48,
@@ -187,14 +191,28 @@ export const selectedCompetitionStyles = StyleSheet.create({
   },
   teamInfoText: {
     fontFamily:'SofascoreSans-Bold', 
-    color:"white"
+    color:"black"
   },
   scoreInfo:{
-    
+    alignItems:'center'
   },
   scoreInfoText: {
-    color:'white',
+    color:'black',
     fontSize:28,
     fontFamily:'SofascoreSans-Bold'
-  }
+  },
+  liveScoreInfoText: {
+    color:'#E50114',
+    fontSize:28,
+    fontFamily:'SofascoreSans-Bold'
+  },
+  menuButtons:{
+    padding:10,
+    backgroundColor:'transparent',
+    color:'black'
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 20,
+  },
 });
