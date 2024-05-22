@@ -40,7 +40,7 @@ export const getMatchMinutesInfo = (currentPeriodStartTimestamp:Time, lastPeriod
     return elapsedTimeMinutes >= 45 ? '45+' : elapsedTimeMinutes;
 };
 
-const leagueOrder = [52,98,17,8,35,23,34,37,325];
+const leagueOrder = [1465,52,98,17,8,35,23,34,37,325];
 export const compareByLeagueOrder = (a:Events, b:Events) => {
     const indexA = leagueOrder.indexOf(a.tournament.uniqueTournament?.id);
     const indexB = leagueOrder.indexOf(b.tournament.uniqueTournament?.id);

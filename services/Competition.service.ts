@@ -2,6 +2,7 @@ const baseUrl = 'https://www.sofascore.com/api/v1/sport';
 import axios from 'axios';
 import { Events } from '../models/competition.model';
 import { DateInformation } from '../helper/utils';
+import { BestPlayer, BestPlayersSummary } from '../models/best-player-models';
 export const getMatchList = async (todayDate:DateInformation): Promise<Events[]> => {
     try {
         const response = await axios.
@@ -32,6 +33,15 @@ export const getSelectedCompetitionDetail = async(competitionId:number) : Promis
     try{
         const response = await axios.get(`https://www.sofascore.com/api/v1/event/${competitionId}`)
         return response.data.event;
+    }catch (error){
+        throw error;
+    }
+}
+
+export const getBestPlayers = async(eventId:number) : Promise<BestPlayersSummary> => {
+    try{
+        const response = await axios.get(`https://www.sofascore.com/api/v1/event/${eventId}/best-players/summary`)
+        return response.data;
     }catch (error){
         throw error;
     }

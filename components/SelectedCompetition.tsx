@@ -7,9 +7,10 @@ import { selectedCompetitionStyles, styles } from './Styles/Styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowLeft, faBell, faShareNodes } from '@fortawesome/free-solid-svg-icons';
 import LinearGradient from 'react-native-linear-gradient';
-import { getSelectedCompetitionDetail, getTeamIcon } from '../services/Competition.service';
+import { getBestPlayers, getSelectedCompetitionDetail, getTeamIcon } from '../services/Competition.service';
 import { Events } from '../models/competition.model';
 import { getStatusByCode, isCompetitionLive } from '../helper/utils';
+import { BestPlayersSummary } from '../models/best-player-models';
 
 type RootStackParamList = {
   Home: undefined;
@@ -26,6 +27,7 @@ type Props = {
 const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
   const competitionId = route.params.itemId;
   const [selectedCompetitionInfo, setSelectedCompetitionInfo] = useState<Events>();
+  const [bestPlayers, setBestPlayers] = useState<BestPlayersSummary>();
   const [selectedMenuItem, setSelectedMenuItem] = useState(0);
   const menuButtons = ["Ayrıntılar", "Kadrolar", "Puan Durumu", "İstatistik", "Maçlar"];
   useEffect(() => {
@@ -33,6 +35,12 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
       setSelectedCompetitionInfo(data);
     })
   }, []);
+
+  useEffect(() => {
+    getBestPlayers(competitionId).then((data) => {
+      setBestPlayers(data);
+    })
+  }, [competitionId])
 
   return (
     selectedCompetitionInfo && (<SafeAreaView style={selectedCompetitionStyles.parentContainer}>
@@ -45,7 +53,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
           <Image
             style={selectedCompetitionStyles.teamIcon}
             source={{ uri: getTeamIcon(selectedCompetitionInfo?.homeTeam.id) }} />
-          <Text style={selectedCompetitionStyles.teamInfoText}>{selectedCompetitionInfo?.homeTeam.name}</Text>
+          <Text style={selectedCompetitionStyles.teamInfoText}>{selectedCompetitionInfo?.homeTeam.shortName}</Text>
         </View>
         <View style={selectedCompetitionStyles.scoreInfo}>
           <Text style={isCompetitionLive(selectedCompetitionInfo!.status.code) ? styles.liveMinuteInfo : styles.minuteInfo}>
@@ -57,7 +65,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
           <Image
             style={selectedCompetitionStyles.teamIcon}
             source={{ uri: getTeamIcon(selectedCompetitionInfo?.awayTeam.id) }} />
-          <Text style={selectedCompetitionStyles.teamInfoText}>{selectedCompetitionInfo?.awayTeam.name}</Text>
+          <Text style={selectedCompetitionStyles.teamInfoText}>{selectedCompetitionInfo?.awayTeam.shortName}</Text>
         </View>
         <View style={{ flexDirection: 'row' }}>
           <Button
@@ -86,6 +94,28 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
             </TouchableOpacity>
           ))}
         </View>
+      </ScrollView>
+      <ScrollView>
+        <Text style={selectedCompetitionStyles.momentumGraphText}>Baskı Grafiği</Text>
+        <View style={selectedCompetitionStyles.momentumGraph}>
+
+        </View>
+        {bestPlayers && 
+          <View style={{flexDirection: 'row', backgroundColor:'#F5F6FA',borderRadius:20,height:'auto',justifyContent: 'space-between'}}>
+            <View style={{flexDirection:'column', marginLeft:20}}>
+              <View style={{width:30,height:30,backgroundColor:'green'}}>
+                <Text style={{color:'white',fontFamily:'SofascoreSans-Regular',fontSize:15,alignSelf:'center',}}>{bestPlayers.bestHomeTeamPlayers[0].value}</Text>
+              </View>
+              <Text style={{color:'#929397',fontFamily:'SofascoreSans-Regular',fontSize:15}}>{bestPlayers.bestHomeTeamPlayers[0].player.shortName}</Text>
+            </View>
+            <View style={{flexDirection:'column', marginRight:20}}>
+              <View style={{width:30,height:30,backgroundColor:'green',alignSelf:'flex-end'}}>
+                <Text style={{color:'white',fontFamily:'SofascoreSans-Regular',fontSize:15,alignSelf:'center'}}>{bestPlayers.bestAwayTeamPlayers[0].value}</Text>
+              </View>
+              <Text style={{color:'#929397',fontFamily:'SofascoreSans-Regular',fontSize:15}}>{bestPlayers.bestAwayTeamPlayers[0].player.shortName}</Text>
+            </View>
+          </View>
+        }
       </ScrollView>
     </SafeAreaView>
     ));

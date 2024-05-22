@@ -222,4 +222,11 @@ export const selectedCompetitionStyles = StyleSheet.create({
     height: 2,
     backgroundColor: 'black',
   },
+  momentumGraphText:{
+    alignSelf:'center',
+    fontWeight:'bold'
+  },
+  momentumGraph:{
+    
+  }
 });

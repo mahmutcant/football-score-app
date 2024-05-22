@@ -59,9 +59,8 @@ export interface Category{
     slug: string;
     sport: Sport;
     id: number;
-    country: Country;
+    country: Country | {};
     flag: string;
-    alpha2: string;
 }
 export interface Country{
     alpha2: string;
@@ -74,6 +73,11 @@ export interface UniqueTournament{
     slug: string;
     category: Category;
     id: number;
+    userCount: number,
+    crowdsourcingEnabled: false,
+    hasPerformanceGraphFeature: false,
+    hasEventPlayerStatistics: true,
+    displayInverseHomeAwayTeams: false
 }
 
 export interface Season{

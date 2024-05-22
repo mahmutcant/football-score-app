@@ -72,7 +72,7 @@ const CompetitionList = () => {
         <SafeAreaView style={styles.safeAreaStyle}>
             <First />
             <ScrollView contentContainerStyle={styles.scrollViewStyle}>
-                {competitions?.slice(0,100).sort(compareByLeagueOrder).map((filteredItem,item) => {
+                {competitions?.sort(compareByLeagueOrder).map((filteredItem,item) => {
                     const date = convertEpochToDate(filteredItem.startTimestamp);
                     return (
                         <TouchableHighlight
