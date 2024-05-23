@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Dimensions, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Button, Image, Text } from 'react-native-elements';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { selectedCompetitionStyles, styles } from './Styles/Styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowLeft, faBell, faShareNodes } from '@fortawesome/free-solid-svg-icons';
-import LinearGradient from 'react-native-linear-gradient';
 import { getBestPlayers, getSelectedCompetitionDetail, getTeamIcon } from '../services/Competition.service';
 import { Events } from '../models/competition.model';
 import { getStatusByCode, isCompetitionLive, playerColorByRatio } from '../helper/utils';
@@ -98,27 +97,27 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
       <ScrollView>
         <Text style={selectedCompetitionStyles.momentumGraphText}>En iyi Oyuncular</Text>
         <View style={selectedCompetitionStyles.momentumGraph}>
-
         </View>
+        <View style={{backgroundColor:'white'}}>
         {bestPlayers && 
-          <View style={{flexDirection: 'row', backgroundColor:'#F5F6FA',borderRadius:20,height:'auto',justifyContent: 'space-between'}}>
-            <View style={{flexDirection:'row', marginLeft:20}}>
+          <View style={selectedCompetitionStyles.bestPlayersContainer}>
+            <View style={{flexDirection:'row'}}>
             <Image
                   style={selectedCompetitionStyles.playerIcon}
                   source={{ uri: `https://api.sofascore.app/api/v1/player/${bestPlayers.bestHomeTeamPlayers[0].player.id}/image` }} />
             <View style={{flexDirection:'column'}}>
-              <View style={{width:30,height:30,backgroundColor:playerColorByRatio(bestPlayers.bestHomeTeamPlayers[0].value)}}>
-                <Text style={{color:'white',fontFamily:'SofascoreSans-Regular',fontSize:15,alignSelf:'center',}}>{bestPlayers.bestHomeTeamPlayers[0].value}</Text>
+              <View style={{width:30,height:30,justifyContent:'center',backgroundColor:playerColorByRatio(bestPlayers.bestHomeTeamPlayers[0].value)}}>
+                <Text style={selectedCompetitionStyles.bestPlayersStyles}>{bestPlayers.bestHomeTeamPlayers[0].value}</Text>
               </View>
               <Text style={{color:'#929397',fontFamily:'SofascoreSans-Regular',fontSize:15}}>{bestPlayers.bestHomeTeamPlayers[0].player.shortName}</Text>
             </View>
             </View>
-            <View style={{flexDirection:'row', marginRight:20}}>
+            <View style={{flexDirection:'row'}}>
             <View style={{flexDirection:'column'}}>
-              <View style={{width:30,height:30,backgroundColor:playerColorByRatio(bestPlayers.bestAwayTeamPlayers[0].value),alignSelf:'flex-end'}}>
-                <Text style={{color:'white',fontFamily:'SofascoreSans-Regular',fontSize:15,alignSelf:'center'}}>{bestPlayers.bestAwayTeamPlayers[0].value}</Text>
+              <View style={{width:30,height:30,justifyContent:'center',backgroundColor:playerColorByRatio(bestPlayers.bestAwayTeamPlayers[0].value),alignSelf:'flex-end'}}>
+                <Text style={selectedCompetitionStyles.bestPlayersStyles}>{bestPlayers.bestAwayTeamPlayers[0].value}</Text>
               </View>
-              <Text style={{color:'#929397',fontFamily:'SofascoreSans-Regular',fontSize:15}}>{bestPlayers.bestAwayTeamPlayers[0].player.shortName}</Text>
+              <Text style={selectedCompetitionStyles.bestPlayersTextStyles}>{bestPlayers.bestAwayTeamPlayers[0].player.shortName}</Text>
             </View>
             <Image
                   style={selectedCompetitionStyles.playerIcon}
@@ -126,6 +125,12 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
             </View>
           </View>
         }
+        </View>
+        <View style={selectedCompetitionStyles.competitionDetailContainer}>
+          <View style={{width:Dimensions.get('screen').width - 10, backgroundColor:'#F5F6FA',borderRadius:30,alignItems:'center',alignSelf:'center'}}>
+            <Text style={{color:'#222327',fontWeight:'bold'}}>FT 2 - 3</Text>
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
     ));

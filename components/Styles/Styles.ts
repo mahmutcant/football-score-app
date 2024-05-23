@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
     safeAreaStyle: {
@@ -168,6 +168,7 @@ export const selectedCompetitionStyles = StyleSheet.create({
   },
   parentContainer: {
     height:'100%',
+    backgroundColor:'#EDF0F5'
   },
   selectedCompetitionToolbar:{
     flexDirection: 'row',
@@ -201,6 +202,7 @@ export const selectedCompetitionStyles = StyleSheet.create({
     fontFamily:'SofascoreSans-Bold', 
     color:"black"
   },
+  
   scoreInfo:{
     alignItems:'center'
   },
@@ -237,5 +239,33 @@ export const selectedCompetitionStyles = StyleSheet.create({
   },
   momentumGraph:{
     
+  },
+  bestPlayersContainer:{
+    flexDirection: 'row', 
+    backgroundColor:'#F5F6FA',
+    borderRadius:30,
+    
+    height:'auto',
+    justifyContent: 'space-between'
+  },
+  bestPlayersStyles: {
+    color:'white',
+    fontFamily:'SofascoreSans-Regular',
+    fontSize:15,
+    alignSelf:'center',
+    
+  },
+  bestPlayersTextStyles:{
+    color:'#929397',
+    fontFamily:'SofascoreSans-Regular',
+    fontSize:15
+  },
+  competitionDetailContainer:{
+    alignSelf:'center',
+    height:'90%',
+    width:Dimensions.get("screen").width - 20,
+    marginTop:10,
+    backgroundColor:'white',
+    borderRadius:10
   }
 });
