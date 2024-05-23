@@ -70,3 +70,20 @@ export const isCompetitionLive = (statusCode:number) => {
     }
     return true;
 };
+
+export const playerColorByRatio = (value:number | any):string => {
+    if(value < 5){
+        return 'red'
+    }else if(value < 6.9){
+        return '#ED7E07'
+    }
+    else if(value < 8){
+        return '#00C424'
+    }
+    else if(value < 9){
+        return '#00ADC4'
+    }
+    else{
+        return 'blue'
+    }
+}

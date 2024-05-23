@@ -178,10 +178,19 @@ export const selectedCompetitionStyles = StyleSheet.create({
     position: 'relative',
     backgroundColor:'white'
   },
+  teamIconContainer: {
+    width: 48,
+    height: 48,
+  },
   teamIcon : {
     width: 48,
     height: 48,
-    
+    aspectRatio: "auto"
+  },
+  playerIcon:{
+    height:50,
+    width:50,
+    borderRadius:40
   },
   teamInfo:{
     alignItems:'center',

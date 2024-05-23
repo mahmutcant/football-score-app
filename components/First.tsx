@@ -15,8 +15,10 @@ const First = () => {
   const [isLiveSelected, setIsLiveSelected] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(dispatchIsLiveSelected(isLiveSelected));
-  }, [isLiveSelected,dispatch]);
+    setTimeout(() => {
+      dispatch(dispatchIsLiveSelected(isLiveSelected));
+    }, 150);
+  }, [isLiveSelected]);
   
   return (
     <View

@@ -9,7 +9,7 @@ import { faArrowLeft, faBell, faShareNodes } from '@fortawesome/free-solid-svg-i
 import LinearGradient from 'react-native-linear-gradient';
 import { getBestPlayers, getSelectedCompetitionDetail, getTeamIcon } from '../services/Competition.service';
 import { Events } from '../models/competition.model';
-import { getStatusByCode, isCompetitionLive } from '../helper/utils';
+import { getStatusByCode, isCompetitionLive, playerColorByRatio } from '../helper/utils';
 import { BestPlayersSummary } from '../models/best-player-models';
 
 type RootStackParamList = {
@@ -96,23 +96,33 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
         </View>
       </ScrollView>
       <ScrollView>
-        <Text style={selectedCompetitionStyles.momentumGraphText}>Baskı Grafiği</Text>
+        <Text style={selectedCompetitionStyles.momentumGraphText}>En iyi Oyuncular</Text>
         <View style={selectedCompetitionStyles.momentumGraph}>
 
         </View>
         {bestPlayers && 
           <View style={{flexDirection: 'row', backgroundColor:'#F5F6FA',borderRadius:20,height:'auto',justifyContent: 'space-between'}}>
-            <View style={{flexDirection:'column', marginLeft:20}}>
-              <View style={{width:30,height:30,backgroundColor:'green'}}>
+            <View style={{flexDirection:'row', marginLeft:20}}>
+            <Image
+                  style={selectedCompetitionStyles.playerIcon}
+                  source={{ uri: `https://api.sofascore.app/api/v1/player/${bestPlayers.bestHomeTeamPlayers[0].player.id}/image` }} />
+            <View style={{flexDirection:'column'}}>
+              <View style={{width:30,height:30,backgroundColor:playerColorByRatio(bestPlayers.bestHomeTeamPlayers[0].value)}}>
                 <Text style={{color:'white',fontFamily:'SofascoreSans-Regular',fontSize:15,alignSelf:'center',}}>{bestPlayers.bestHomeTeamPlayers[0].value}</Text>
               </View>
               <Text style={{color:'#929397',fontFamily:'SofascoreSans-Regular',fontSize:15}}>{bestPlayers.bestHomeTeamPlayers[0].player.shortName}</Text>
             </View>
-            <View style={{flexDirection:'column', marginRight:20}}>
-              <View style={{width:30,height:30,backgroundColor:'green',alignSelf:'flex-end'}}>
+            </View>
+            <View style={{flexDirection:'row', marginRight:20}}>
+            <View style={{flexDirection:'column'}}>
+              <View style={{width:30,height:30,backgroundColor:playerColorByRatio(bestPlayers.bestAwayTeamPlayers[0].value),alignSelf:'flex-end'}}>
                 <Text style={{color:'white',fontFamily:'SofascoreSans-Regular',fontSize:15,alignSelf:'center'}}>{bestPlayers.bestAwayTeamPlayers[0].value}</Text>
               </View>
               <Text style={{color:'#929397',fontFamily:'SofascoreSans-Regular',fontSize:15}}>{bestPlayers.bestAwayTeamPlayers[0].player.shortName}</Text>
+            </View>
+            <Image
+                  style={selectedCompetitionStyles.playerIcon}
+                  source={{ uri: `https://api.sofascore.app/api/v1/player/${bestPlayers.bestAwayTeamPlayers[0].player.id}/image` }} />
             </View>
           </View>
         }

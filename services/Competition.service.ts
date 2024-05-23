@@ -25,7 +25,7 @@ export const getLiveMatchList = async(): Promise<Events[]> => {
 
 export const getTeamIcon = (teamId:number | undefined): string|undefined => {
     if(teamId){
-        return `https://api.sofascore.app/api/v1/team/${teamId}/image/small`;
+        return `https://api.sofascore.app/api/v1/team/${teamId}/image`;
     }
 };
 
