@@ -12,6 +12,7 @@ import { styles } from './Styles/Styles';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import BottomBar from './BottomBar';
+import { GestureHandlerRootView, PanGestureHandler,State, PanGestureHandlerStateChangeEvent } from 'react-native-gesture-handler';
 
 type RootStackParamList = {
     Home: undefined;
@@ -23,6 +24,7 @@ type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 const CompetitionList = () => {
     const [competitions, setCompetitions] = useState<Events[]>();
     const todayDate = getTodayDate();
+    const [selectedDay,setSelectedDay] = useState<number>(todayDate.day);
     const isLiveSelected = useSelector((state: any) => state.customReducer.isLiveSelected);
     const error = console.error;
     console.error = (...args: any) => {
@@ -38,6 +40,19 @@ const CompetitionList = () => {
             console.error('Error fetching live matches:', error);
         }
     };
+
+    const handleStateChange = (event: PanGestureHandlerStateChangeEvent) => {
+        const { nativeEvent } = event;
+        if (nativeEvent.state === State.END) {
+          if (nativeEvent.translationX > 0) {
+            setSelectedDay(selectedDay - 1)
+            console.log(selectedDay);
+          } else if (nativeEvent.translationX < 0) {
+            setSelectedDay(selectedDay + 1)
+            console.log(selectedDay);
+          }
+        }
+      };
 
     const fetchTodayMatches = async () => {
         try {
@@ -71,8 +86,10 @@ const CompetitionList = () => {
     return (
         <SafeAreaView style={styles.safeAreaStyle}>
             <First />
+            <GestureHandlerRootView>
+                <PanGestureHandler  activeOffsetX={[-20, 20]} onHandlerStateChange={handleStateChange}>
             <ScrollView contentContainerStyle={styles.scrollViewStyle}>
-                {competitions?.sort(compareByLeagueOrder).map((filteredItem,item) => {
+                {competitions && competitions?.sort(compareByLeagueOrder).map((filteredItem,item) => {
                     const date = convertEpochToDate(filteredItem.startTimestamp);
                     return (
                         <TouchableHighlight
@@ -133,6 +150,8 @@ const CompetitionList = () => {
                     );
                 })}
             </ScrollView>
+            </PanGestureHandler>
+            </GestureHandlerRootView>
             <BottomBar />
         </SafeAreaView>
     );

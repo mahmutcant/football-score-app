@@ -63,7 +63,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
         <View style={selectedCompetitionStyles.teamInfo}>
           <Image
             style={selectedCompetitionStyles.teamIcon}
-            source={{ uri: getTeamIcon(selectedCompetitionInfo?.awayTeam.id) }} />
+            source={{ uri: getTeamIcon(selectedCompetitionInfo?.awayTeam.id) }}/>
           <Text style={selectedCompetitionStyles.teamInfoText}>{selectedCompetitionInfo?.awayTeam.shortName}</Text>
         </View>
         <View style={{ flexDirection: 'row' }}>
