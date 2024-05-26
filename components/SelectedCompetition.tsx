@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowLeft, faBell, faShareNodes } from '@fortawesome/free-solid-svg-icons';
 import { getBestPlayers, getSelectedCompetitionDetail, getTeamIcon } from '../services/Competition.service';
 import { Events } from '../models/competition.model';
-import { getStatusByCode, isCompetitionLive, playerColorByRatio } from '../helper/utils';
+import { DateInformation, StartTimeModel, convertEpochToDate, getStatusByCode, isCompetitionLive, playerColorByRatio } from '../helper/utils';
 import { BestPlayersSummary } from '../models/best-player-models';
 
 type RootStackParamList = {
@@ -28,6 +28,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
   const [selectedCompetitionInfo, setSelectedCompetitionInfo] = useState<Events>();
   const [bestPlayers, setBestPlayers] = useState<BestPlayersSummary>();
   const [selectedMenuItem, setSelectedMenuItem] = useState(0);
+  const [startDate,setStartDate] = useState<StartTimeModel>();
   const menuButtons = ["Ayrıntılar", "Kadrolar", "Puan Durumu", "İstatistik", "Maçlar"];
   useEffect(() => {
     getSelectedCompetitionDetail(competitionId).then((data) => {
@@ -40,7 +41,15 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
       setBestPlayers(data);
     })
   }, [competitionId])
-
+  useEffect(() => {
+    if(selectedCompetitionInfo?.startTimestamp){
+      setStartDate(convertEpochToDate(selectedCompetitionInfo!.startTimestamp))
+    }
+  },[selectedCompetitionInfo])
+  useEffect(() => {
+    console.log(bestPlayers)
+  }, [bestPlayers])
+  
   return (
     selectedCompetitionInfo && (<SafeAreaView style={selectedCompetitionStyles.parentContainer}>
       <View style={selectedCompetitionStyles.selectedCompetitionToolbar}>
@@ -58,7 +67,10 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
           <Text style={isCompetitionLive(selectedCompetitionInfo!.status.code) ? styles.liveMinuteInfo : styles.minuteInfo}>
             {getStatusByCode(selectedCompetitionInfo!)}
           </Text>
-          <Text style={isCompetitionLive(selectedCompetitionInfo!.status.code) ? selectedCompetitionStyles.liveScoreInfoText : selectedCompetitionStyles.scoreInfoText}>{selectedCompetitionInfo?.homeScore.display} - {selectedCompetitionInfo?.awayScore.display}</Text>
+          {selectedCompetitionInfo && selectedCompetitionInfo.status.code === 0 ? <Text style={selectedCompetitionStyles.notStartedInfoText}>{startDate?.hours} : {startDate?.minutes}</Text> :
+          <Text style={isCompetitionLive(selectedCompetitionInfo!.status.code) ? selectedCompetitionStyles.liveScoreInfoText : 
+            selectedCompetitionStyles.scoreInfoText}>{selectedCompetitionInfo?.homeScore.display} - {selectedCompetitionInfo?.awayScore.display}</Text>}
+          
         </View>
         <View style={selectedCompetitionStyles.teamInfo}>
           <Image
@@ -99,7 +111,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
         <View style={selectedCompetitionStyles.momentumGraph}>
         </View>
         <View style={{backgroundColor:'white'}}>
-        {bestPlayers && 
+        {bestPlayers &&
           <View style={selectedCompetitionStyles.bestPlayersContainer}>
             <View style={{flexDirection:'row'}}>
             <Image

@@ -4,6 +4,13 @@ export interface DateInformation{
     month:number;
     year:number;
 }
+export interface StartTimeModel{
+    day:number;
+    month:number;
+    year:number;
+    hours: number,
+    minutes: string,
+}
 export const getTodayDate = (): DateInformation => {
     const today = new Date();
     const day = today.getDate();
@@ -12,7 +19,7 @@ export const getTodayDate = (): DateInformation => {
     return {day,month,year};
 };
 
-export const convertEpochToDate = (unix_timestamp: number) => {
+export const convertEpochToDate = (unix_timestamp: number):StartTimeModel => {
     const date = new Date((unix_timestamp) * 1000);
     const day = date.getDate();
     const month = date.getMonth() + 1;
