@@ -40,13 +40,15 @@ export const getMatchMinutesInfo = (currentPeriodStartTimestamp:Time, lastPeriod
     return elapsedTimeMinutes >= 45 ? '45+' : elapsedTimeMinutes;
 };
 
-const leagueOrder = [1465,52,98,17,8,35,23,34,37,325];
-export const compareByLeagueOrder = (a:Events, b:Events) => {
-    const indexA = leagueOrder.indexOf(a.tournament.uniqueTournament?.id);
-    const indexB = leagueOrder.indexOf(b.tournament.uniqueTournament?.id);
-    if (indexA && indexA === -1) return 1;
-    if (indexB && indexB === -1) return -1;
-    return indexA - indexB;
+const leagueOrderByCountry = [46,1,32,31,30,7];
+export const compareByLeagueOrder = (events: Events[]) => {
+    return events.sort((a, b) => {
+        const indexA = leagueOrderByCountry.indexOf(a.tournament.category.id);
+        const indexB = leagueOrderByCountry.indexOf(b.tournament.category.id);
+        if (indexA && indexA === -1) return 1;
+        if (indexB && indexB === -1) return -1;
+        return indexA - indexB;
+    });
 };
 
 export const getStatusByCode = (event:Events) => {

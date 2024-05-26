@@ -14,6 +14,7 @@ export const styles = StyleSheet.create({
         paddingVertical: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#ddd',
+        margin: 10
     },
     subMatchTeamsContainer: {
         flexDirection: 'row',
@@ -23,6 +24,7 @@ export const styles = StyleSheet.create({
     timeText: {
         fontSize: 16,
         color: 'black',
+        fontFamily:'SofascoreSans-Regular',
     },
     timeTextContainer:{
       flexDirection: 'column',
@@ -40,7 +42,7 @@ export const styles = StyleSheet.create({
       textAlign: 'center',
     },
     teamsContainer: {
-        flexDirection: 'column',
+        flexDirection: 'row',
         marginRight: 10,
         flex: 1,
     },
@@ -65,6 +67,7 @@ export const styles = StyleSheet.create({
         color: 'black',
         fontSize: 16,
         fontFamily: 'notoserif',
+        alignSelf:'center'
     },
     liveMatchScore: {
       color: 'red',
