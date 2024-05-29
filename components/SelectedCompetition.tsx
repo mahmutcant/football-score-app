@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
-import { Button, Image, Text } from 'react-native-elements';
+import { Button, Divider, Image, Text } from 'react-native-elements';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { selectedCompetitionStyles, styles } from './Styles/Styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArrowLeft, faBell, faShareNodes } from '@fortawesome/free-solid-svg-icons';
-import { getBestPlayers, getSelectedCompetitionDetail, getTeamIcon } from '../services/Competition.service';
+import { faArrowLeft, faBell, faRepeat, faShareNodes } from '@fortawesome/free-solid-svg-icons';
+import { getBestPlayers, getIncidents, getSelectedCompetitionDetail, getTeamIcon } from '../services/Competition.service';
 import { Events } from '../models/competition.model';
 import { DateInformation, StartTimeModel, convertEpochToDate, getStatusByCode, isCompetitionLive, playerColorByRatio } from '../helper/utils';
 import { BestPlayersSummary } from '../models/best-player-models';
+import { Incident } from '../models/incidents-model';
 
 type RootStackParamList = {
   Home: undefined;
@@ -28,11 +29,15 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
   const [selectedCompetitionInfo, setSelectedCompetitionInfo] = useState<Events>();
   const [bestPlayers, setBestPlayers] = useState<BestPlayersSummary>();
   const [selectedMenuItem, setSelectedMenuItem] = useState(0);
+  const [incidents,setIncidents] = useState<Incident[]>();
   const [startDate,setStartDate] = useState<StartTimeModel>();
   const menuButtons = ["Ayrıntılar", "Kadrolar", "Puan Durumu", "İstatistik", "Maçlar"];
   useEffect(() => {
     getSelectedCompetitionDetail(competitionId).then((data) => {
       setSelectedCompetitionInfo(data);
+    })
+    getIncidents(competitionId).then((data) => {
+      setIncidents(data.incidents);
     })
   }, []);
 
@@ -46,10 +51,51 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
       setStartDate(convertEpochToDate(selectedCompetitionInfo!.startTimestamp))
     }
   },[selectedCompetitionInfo])
-  useEffect(() => {
-    console.log(bestPlayers)
-  }, [bestPlayers])
-  
+  const setElementsByIncident = (item:Incident) => {
+    switch(item.incidentType){
+      case "card":
+        if(item.isHome) {
+          return (<View style={selectedCompetitionStyles.isHomeContainer}>
+            <View style={{margin:5}}>
+            <View style={{width:20,height:20,backgroundColor:'#d9af00'}}></View>
+            <Text>{item.time}'</Text>
+            </View>
+            <Text style={{margin:5}}>|</Text>
+            <Text style={{margin:5}}>{item.player?.shortName}</Text>
+          </View>)
+        }
+        else{
+          return (<View style={selectedCompetitionStyles.isAwayContainer}>
+            <Text style={{margin:5}}>{item.player?.shortName}</Text>
+            <Text style={{margin:5}}>|</Text>
+            <View style={{margin:5}}>
+            <View style={{width:20,height:20,backgroundColor:'#d9af00'}}></View>
+            <Text style={{margin:5}}>{item.time}'</Text>
+            </View>
+          </View>)
+        }
+      case "substitution":
+        if(item.isHome){
+          return (<View style={selectedCompetitionStyles.isHomeContainer}>
+            <Text style={{margin:5}}>{item.time}'</Text>
+            <Text style={{margin:5}}>|</Text>
+            <View style={{margin:5}}>
+            <FontAwesomeIcon icon={faRepeat}/>
+          </View>
+          </View>)
+        }
+        return (<View style={selectedCompetitionStyles.isAwayContainer}>
+          <Text style={{margin:5}}>{item.player?.shortName}</Text>
+          <Text style={{margin:5}}>|</Text>
+          <Text style={{margin:5}}>{item.time}'</Text>
+          <View style={{margin:5}}>
+            <FontAwesomeIcon icon={faRepeat}/>
+          </View>
+        </View>)
+      default: 
+        null
+    }
+  }
   return (
     selectedCompetitionInfo && (<SafeAreaView style={selectedCompetitionStyles.parentContainer}>
       <View style={selectedCompetitionStyles.selectedCompetitionToolbar}>
@@ -67,10 +113,12 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
           <Text style={isCompetitionLive(selectedCompetitionInfo!.status.code) ? styles.liveMinuteInfo : styles.minuteInfo}>
             {getStatusByCode(selectedCompetitionInfo!)}
           </Text>
-          {selectedCompetitionInfo && selectedCompetitionInfo.status.code === 0 ? <Text style={selectedCompetitionStyles.notStartedInfoText}>{startDate?.hours} : {startDate?.minutes}</Text> :
-          <Text style={isCompetitionLive(selectedCompetitionInfo!.status.code) ? selectedCompetitionStyles.liveScoreInfoText : 
-            selectedCompetitionStyles.scoreInfoText}>{selectedCompetitionInfo?.homeScore.display} - {selectedCompetitionInfo?.awayScore.display}</Text>}
-          
+          {
+            selectedCompetitionInfo && selectedCompetitionInfo.status.code === 0 ? <Text style={selectedCompetitionStyles.notStartedInfoText}>{startDate?.hours} : {startDate?.minutes}</Text> :
+            <Text style={isCompetitionLive(selectedCompetitionInfo!.status.code) ? selectedCompetitionStyles.liveScoreInfoText : 
+              selectedCompetitionStyles.scoreInfoText}>{selectedCompetitionInfo?.homeScore.display} - {selectedCompetitionInfo?.awayScore.display}
+            </Text>
+          }
         </View>
         <View style={selectedCompetitionStyles.teamInfo}>
           <Image
@@ -140,7 +188,9 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
         </View>
         <View style={selectedCompetitionStyles.competitionDetailContainer}>
           <View style={{width:Dimensions.get('screen').width - 10, backgroundColor:'#F5F6FA',borderRadius:30,alignItems:'center',alignSelf:'center'}}>
-            <Text style={{color:'#222327',fontWeight:'bold'}}>FT 2 - 3</Text>
+            {incidents && incidents.map((item) => (
+              setElementsByIncident(item)
+            ))}
           </View>
         </View>
       </ScrollView>

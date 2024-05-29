@@ -275,5 +275,14 @@ export const selectedCompetitionStyles = StyleSheet.create({
     marginTop:10,
     backgroundColor:'white',
     borderRadius:10
+  },
+  isHomeContainer: {
+    flexDirection:'row',
+    alignSelf:'baseline',
+    margin:10
+  },
+  isAwayContainer: {
+    flexDirection:'row',
+    alignSelf:'flex-end'
   }
 });
