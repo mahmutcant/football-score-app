@@ -61,12 +61,12 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
             <Text>{item.time}'</Text>
             </View>
             <View style={{width:1,height:35, backgroundColor:'black', margin:5}}></View>
-            <Text style={{margin:5}}>{item.player?.shortName}</Text>
+            <Text style={{fontFamily:"SofascoreSans-Regular",fontSize:15,margin:5}}>{item.player?.shortName}</Text>
           </View>)
         }
         else{
           return (<View style={selectedCompetitionStyles.isAwayContainer}>
-            <Text style={{margin:5}}>{item.player?.shortName}</Text>
+            <Text style={{fontFamily:"SofascoreSans-Regular",fontSize:15,margin:5}}>{item.player?.shortName}</Text>
             <View style={{width:1,height:35, backgroundColor:'black', margin:5}}></View>
             <View style={{margin:5}}>
             <View style={{width:20,height:20,backgroundColor:'#d9af00'}}></View>
@@ -84,15 +84,17 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
             <Text style={{margin:5}}>{item.player?.shortName}</Text>
             <View style={{width:1,height:35, backgroundColor:'black', margin:5}}></View>
             <View style={{marginLeft:10}}>
-              <Text>{item.playerIn?.shortName}</Text>
-              <Text>{item.playerOut?.shortName}</Text>
-          </View>
+              <Text style={{fontFamily:"SofascoreSans-Regular",fontSize:15, color:"#191919"}}>Giren: {item.playerIn?.shortName}</Text>
+              <Text style={{fontFamily:"SofascoreSans-Regular",fontSize:14, color:"#9C9C9C"}}>Çıkan: {item.playerOut?.shortName}</Text>
+            </View>
           </View>)
         }
         return (<View style={selectedCompetitionStyles.substitutionIsAway}>
           <View style={{marginRight:10}}>
-            <Text>{item.playerIn?.shortName}</Text>
-            <Text>{item.playerOut?.shortName}</Text>
+            <View style={{marginLeft:10}}>
+                <Text style={{fontFamily:"SofascoreSans-Regular",fontSize:15, color:"#191919"}}>Giren: {item.playerIn?.shortName}</Text>
+                <Text style={{fontFamily:"SofascoreSans-Regular",fontSize:14,color:"#9C9C9C"}}>Çıkan: {item.playerOut?.shortName}</Text>
+            </View>
           </View>
           <Text style={{margin:5}}>{item.player?.shortName}</Text>
           <View style={{width:1,height:35, backgroundColor:'black', margin:5}}></View>

@@ -279,7 +279,7 @@ export const selectedCompetitionStyles = StyleSheet.create({
   isHomeContainer: {
     flexDirection:'row',
     alignSelf:'baseline',
-    marginTop:10
+    margin:10
   },
   substitutionIsHome: {
     flexDirection:'row',
@@ -292,6 +292,6 @@ export const selectedCompetitionStyles = StyleSheet.create({
   },
   isAwayContainer: {
     flexDirection:'row',
-    alignSelf:'flex-end'
+    alignSelf:'flex-end',
   }
 });
