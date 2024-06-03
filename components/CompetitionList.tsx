@@ -56,7 +56,7 @@ const CompetitionList = () => {
     const fetchTodayMatches = async () => {
         try {
             const data = await getMatchList(todayDate);
-            const newData = data.filter(item => convertEpochToDate(item.startTimestamp).day === todayDate.day);
+            //const newData = data.filter(item => convertEpochToDate(item.startTimestamp).day === todayDate.day);
             setCompetitions(data);
         } catch (error) {
             console.error('Error fetching today matches:', error);

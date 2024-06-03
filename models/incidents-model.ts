@@ -19,6 +19,8 @@ export interface Incident {
     incidentType?: string;
     confirmed?: boolean;
     length: number;
+    playerIn?: Player;
+    playerOut?: Player;
 }
 
 export interface Player{

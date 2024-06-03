@@ -7,7 +7,7 @@ import { Incidents } from '../models/incidents-model';
 export const getMatchList = async (todayDate:DateInformation): Promise<Events[]> => {
     try {
         const response = await axios.
-        get(`${baseUrl}/football/scheduled-events/${todayDate.year + "-" + (todayDate.month < 10 ? "0" + todayDate.month : todayDate.month) + "-" + todayDate.day}`);
+        get(`${baseUrl}/football/scheduled-events/${todayDate.year + "-" + (todayDate.month < 10 ? "0" + todayDate.month : todayDate.month) + "-" + (todayDate.day < 10 ? "0" + todayDate.day : todayDate.day)}`);
         return response.data.events;
     } catch (error) {
         throw error;

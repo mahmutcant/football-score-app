@@ -60,14 +60,14 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
             <View style={{width:20,height:20,backgroundColor:'#d9af00'}}></View>
             <Text>{item.time}'</Text>
             </View>
-            <Text style={{margin:5}}>|</Text>
+            <View style={{width:1,height:35, backgroundColor:'black', margin:5}}></View>
             <Text style={{margin:5}}>{item.player?.shortName}</Text>
           </View>)
         }
         else{
           return (<View style={selectedCompetitionStyles.isAwayContainer}>
             <Text style={{margin:5}}>{item.player?.shortName}</Text>
-            <Text style={{margin:5}}>|</Text>
+            <View style={{width:1,height:35, backgroundColor:'black', margin:5}}></View>
             <View style={{margin:5}}>
             <View style={{width:20,height:20,backgroundColor:'#d9af00'}}></View>
             <Text style={{margin:5}}>{item.time}'</Text>
@@ -76,22 +76,36 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
         }
       case "substitution":
         if(item.isHome){
-          return (<View style={selectedCompetitionStyles.isHomeContainer}>
-            <Text style={{margin:5}}>{item.time}'</Text>
-            <Text style={{margin:5}}>|</Text>
-            <View style={{margin:5}}>
-            <FontAwesomeIcon icon={faRepeat}/>
+          return (<View style={selectedCompetitionStyles.substitutionIsHome}>
+            <View style={{marginTop:5}}>
+              <FontAwesomeIcon color='blue' icon={faRepeat}/>
+              <Text>{item.time}'</Text>
+            </View>
+            <Text style={{margin:5}}>{item.player?.shortName}</Text>
+            <View style={{width:1,height:35, backgroundColor:'black', margin:5}}></View>
+            <View style={{marginLeft:10}}>
+              <Text>{item.playerIn?.shortName}</Text>
+              <Text>{item.playerOut?.shortName}</Text>
           </View>
           </View>)
         }
-        return (<View style={selectedCompetitionStyles.isAwayContainer}>
+        return (<View style={selectedCompetitionStyles.substitutionIsAway}>
+          <View style={{marginRight:10}}>
+            <Text>{item.playerIn?.shortName}</Text>
+            <Text>{item.playerOut?.shortName}</Text>
+          </View>
           <Text style={{margin:5}}>{item.player?.shortName}</Text>
-          <Text style={{margin:5}}>|</Text>
-          <Text style={{margin:5}}>{item.time}'</Text>
-          <View style={{margin:5}}>
-            <FontAwesomeIcon icon={faRepeat}/>
+          <View style={{width:1,height:35, backgroundColor:'black', margin:5}}></View>
+          <View style={{margin:10}}>
+            <FontAwesomeIcon color='blue' icon={faRepeat}/>
+            <Text>{item.time}'</Text>
           </View>
         </View>)
+      case "goal":
+        if(item.isHome){
+          return (<View></View>);
+        }
+        return(<View></View>);
       default: 
         null
     }
@@ -166,7 +180,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
                   style={selectedCompetitionStyles.playerIcon}
                   source={{ uri: `https://api.sofascore.app/api/v1/player/${bestPlayers.bestHomeTeamPlayers[0].player.id}/image` }} />
             <View style={{flexDirection:'column'}}>
-              <View style={{width:30,height:30,justifyContent:'center',backgroundColor:playerColorByRatio(bestPlayers.bestHomeTeamPlayers[0].value)}}>
+              <View style={{width:35,height:35,justifyContent:'center',backgroundColor:playerColorByRatio(bestPlayers.bestHomeTeamPlayers[0].value)}}>
                 <Text style={selectedCompetitionStyles.bestPlayersStyles}>{bestPlayers.bestHomeTeamPlayers[0].value}</Text>
               </View>
               <Text style={{color:'#929397',fontFamily:'SofascoreSans-Regular',fontSize:15}}>{bestPlayers.bestHomeTeamPlayers[0].player.shortName}</Text>
@@ -174,7 +188,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
             </View>
             <View style={{flexDirection:'row'}}>
             <View style={{flexDirection:'column'}}>
-              <View style={{width:30,height:30,justifyContent:'center',backgroundColor:playerColorByRatio(bestPlayers.bestAwayTeamPlayers[0].value),alignSelf:'flex-end'}}>
+              <View style={{width:35,height:35,justifyContent:'center',backgroundColor:playerColorByRatio(bestPlayers.bestAwayTeamPlayers[0].value),alignSelf:'flex-end'}}>
                 <Text style={selectedCompetitionStyles.bestPlayersStyles}>{bestPlayers.bestAwayTeamPlayers[0].value}</Text>
               </View>
               <Text style={selectedCompetitionStyles.bestPlayersTextStyles}>{bestPlayers.bestAwayTeamPlayers[0].player.shortName}</Text>
@@ -187,7 +201,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
         }
         </View>
         <View style={selectedCompetitionStyles.competitionDetailContainer}>
-          <View style={{width:Dimensions.get('screen').width - 10, backgroundColor:'#F5F6FA',borderRadius:30,alignItems:'center',alignSelf:'center'}}>
+          <View style={{width:Dimensions.get('screen').width - 10, backgroundColor:'#F5F6FA',borderRadius:35,alignItems:'center',alignSelf:'center'}}>
             {incidents && incidents.map((item) => (
               setElementsByIncident(item)
             ))}
