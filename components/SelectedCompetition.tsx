@@ -69,7 +69,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
             <Text style={{fontFamily:"SofascoreSans-Regular",fontSize:15,margin:5}}>{item.player?.shortName}</Text>
             <View style={{width:1,height:35, backgroundColor:'black', margin:5}}></View>
             <View style={{margin:5}}>
-            <View style={{width:20,height:20,backgroundColor:'#d9af00'}}></View>
+            <View style={{width:20,height:20,backgroundColor: item.incidentClass === "red" ? '#C7361F' : "#d9af00"}}></View>
             <Text style={{margin:5}}>{item.time}'</Text>
             </View>
           </View>)
@@ -130,7 +130,10 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
             </View>
           </View>);
         }
-        return(<View></View>);
+      case "period":
+        return (<View style={{width:"100%", backgroundColor:"#fff",alignItems:'center'}}>
+          <Text style={{color:"black", fontFamily:"SofascoreSans-Bold"}}>{item.text === "HT" ? "IY" : "MS"} {item.homeScore}-{item.awayScore}</Text>
+        </View>);
       default: 
         null
     }

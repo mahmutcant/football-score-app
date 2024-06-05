@@ -3,6 +3,7 @@ export interface Incidents {
 }
 
 export interface Incident {
+    text?: string;
     from: string;
     homeScore?: number;
     awayScore?: number;
