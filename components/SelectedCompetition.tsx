@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
-import { Button, Divider, Image, Text } from 'react-native-elements';
+import { SafeAreaView, ScrollView, TouchableOpacity, View } from 'react-native';
+import { Button, Image, Text } from 'react-native-elements';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { selectedCompetitionStyles, styles } from './Styles/Styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArrowLeft, faBell, faFutbol, faFutbolBall, faRepeat, faShareNodes } from '@fortawesome/free-solid-svg-icons';
-import { getBestPlayers, getIncidents, getSelectedCompetitionDetail, getTeamIcon } from '../services/Competition.service';
+import { faArrowLeft, faBell,faShareNodes } from '@fortawesome/free-solid-svg-icons';
+import { getBestPlayers, getSelectedCompetitionDetail, getTeamIcon } from '../services/Competition.service';
 import { Events } from '../models/competition.model';
-import { DateInformation, StartTimeModel, convertEpochToDate, getStatusByCode, isCompetitionLive, playerColorByRatio } from '../helper/utils';
+import { StartTimeModel, convertEpochToDate, getStatusByCode, isCompetitionLive } from '../helper/utils';
 import { BestPlayersSummary } from '../models/best-player-models';
-import { Incident } from '../models/incidents-model';
 import SelectedCompetitionIncident from './SelectedCompetitionIncident';
 
 type RootStackParamList = {
