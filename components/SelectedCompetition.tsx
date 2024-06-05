@@ -5,7 +5,7 @@ import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { selectedCompetitionStyles, styles } from './Styles/Styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faArrowLeft, faBell, faRepeat, faShareNodes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faBell, faFutbol, faFutbolBall, faRepeat, faShareNodes } from '@fortawesome/free-solid-svg-icons';
 import { getBestPlayers, getIncidents, getSelectedCompetitionDetail, getTeamIcon } from '../services/Competition.service';
 import { Events } from '../models/competition.model';
 import { DateInformation, StartTimeModel, convertEpochToDate, getStatusByCode, isCompetitionLive, playerColorByRatio } from '../helper/utils';
@@ -105,7 +105,30 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
         </View>)
       case "goal":
         if(item.isHome){
-          return (<View></View>);
+          return (<View style={selectedCompetitionStyles.substitutionIsHome}>
+            <View style={{margin:5}}>
+              {item.from === "penalty" ? <Text>(P)</Text> : <FontAwesomeIcon color='green' icon={faFutbol}/>}
+              <Text>{item.time}'</Text>
+            </View>
+            <View style={{width:1,height:35, backgroundColor:'black', margin:5}}></View>
+            <View style={{margin:5}}>
+              <Text>{item.player?.shortName}</Text>
+              {item.assist1 && (<Text style={{fontFamily:"SofascoreSans-Regular",fontSize:14,color:"#9C9C9C"}}>Asist: {item.assist1?.shortName}</Text>)}
+            </View>
+          </View>);
+        }else {
+          return (<View style={selectedCompetitionStyles.substitutionIsAway}>
+            <View style={{margin:5}}>
+              <Text style={{alignSelf:'flex-end'}}>{item.player?.shortName}</Text>
+              {item.from === "penalty" && <Text>(P)</Text>}
+              {item.assist1 && (<Text style={{fontFamily:"SofascoreSans-Regular",fontSize:14,color:"#9C9C9C"}}>Asist: {item.assist1?.shortName}</Text>)}
+            </View>
+            <View style={{width:1,height:35, backgroundColor:'black', margin:5}}></View>
+            <View style={{margin:5}}>
+              {item.from === "penalty" ? <Text>(P)</Text> : <FontAwesomeIcon color='green' icon={faFutbol}/>}
+              <Text>{item.time}'</Text>
+            </View>
+          </View>);
         }
         return(<View></View>);
       default: 
