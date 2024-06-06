@@ -6,11 +6,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { selectedCompetitionStyles, styles } from './Styles/Styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowLeft, faBell,faShareNodes } from '@fortawesome/free-solid-svg-icons';
-import { getBestPlayers, getSelectedCompetitionDetail, getTeamIcon } from '../services/Competition.service';
+import { getBestPlayers, getIncidents, getSelectedCompetitionDetail, getTeamIcon } from '../services/Competition.service';
 import { Events } from '../models/competition.model';
 import { StartTimeModel, convertEpochToDate, getStatusByCode, isCompetitionLive } from '../helper/utils';
 import { BestPlayersSummary } from '../models/best-player-models';
 import SelectedCompetitionIncident from './SelectedCompetitionIncident';
+import { Incident } from '../models/incidents-model';
 
 type RootStackParamList = {
   Home: undefined;
@@ -30,10 +31,14 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
   const [bestPlayers, setBestPlayers] = useState<BestPlayersSummary>();
   const [selectedMenuItem, setSelectedMenuItem] = useState(0);
   const [startDate,setStartDate] = useState<StartTimeModel>();
+  const [incidents,setIncidents] = useState<Incident[]>();
   const menuButtons = ["Ayrıntılar", "Kadrolar", "Puan Durumu", "İstatistik", "Maçlar"];
   useEffect(() => {
     getSelectedCompetitionDetail(competitionId).then((data) => {
       setSelectedCompetitionInfo(data);
+    })
+    getIncidents(competitionId).then((data) => {
+      setIncidents(data.incidents);
     })
   }, []);
 
@@ -42,11 +47,21 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
       setBestPlayers(data);
     })
   }, [competitionId])
+  
   useEffect(() => {
     if(selectedCompetitionInfo?.startTimestamp){
       setStartDate(convertEpochToDate(selectedCompetitionInfo!.startTimestamp))
     }
   },[selectedCompetitionInfo])
+
+  const getDetailBySelectedMenuItem = () => {
+    switch(selectedMenuItem){
+      case 0:
+        return <SelectedCompetitionIncident incidents={incidents!} bestPlayers={bestPlayers!}/>
+      case 1:
+        return <View><Text>öteki açılacak</Text></View>
+    }
+  }
   
   return (
     selectedCompetitionInfo && (<SafeAreaView style={selectedCompetitionStyles.parentContainer}>
@@ -106,7 +121,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
           ))}
         </View>
       </ScrollView>
-      {(bestPlayers && competitionId) && <SelectedCompetitionIncident competitionId={competitionId} bestPlayers={bestPlayers!}/>}
+      {getDetailBySelectedMenuItem()}
     </SafeAreaView>
     ));
 };
