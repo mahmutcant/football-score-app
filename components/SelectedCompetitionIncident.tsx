@@ -1,16 +1,20 @@
 import { Dimensions, View } from "react-native"
 import { Image, Text } from "react-native-elements"
-import { ScrollView } from "react-native-gesture-handler"
+import { ScrollView } from "react-native";
 import { selectedCompetitionStyles } from "./Styles/Styles"
 import { Incident } from "../models/incidents-model"
 import { BestPlayersSummary } from "../models/best-player-models"
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome"
 import { faFutbol, faRepeat } from "@fortawesome/free-solid-svg-icons"
 import { playerColorByRatio } from "../helper/utils"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { getIncidents } from "../services/Competition.service"
+interface ChildProps {
+  competitionId:any,
+  bestPlayers:BestPlayersSummary
+}
 
-const SelectedCompetitionIncident = (competitionId:any,bestPlayers:BestPlayersSummary) => {
+const SelectedCompetitionIncident : React.FC<ChildProps> = ({competitionId,bestPlayers}) => {
     const [incidents,setIncidents] = useState<Incident[]>();
     useEffect(() => {
         getIncidents(competitionId).then((data) => {

@@ -106,7 +106,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
           ))}
         </View>
       </ScrollView>
-      <SelectedCompetitionIncident competitionId={competitionId} bestPlayers={bestPlayers}/>
+      {(bestPlayers && competitionId) && <SelectedCompetitionIncident competitionId={competitionId} bestPlayers={bestPlayers!}/>}
     </SafeAreaView>
     ));
 };
