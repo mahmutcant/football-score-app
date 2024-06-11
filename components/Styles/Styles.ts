@@ -295,3 +295,103 @@ export const selectedCompetitionStyles = StyleSheet.create({
     alignSelf:'flex-end',
   }
 });
+
+export const lineupsStyle = StyleSheet.create({
+  
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  field: {
+    width: "100%",
+    height: '80%',
+    backgroundColor: '#CCEDC0',
+    position: 'relative',
+    borderColor: '#fff',
+    borderWidth: 2,
+    borderRadius: 10,
+  },
+  halfLine: {
+    position: 'absolute',
+    top: '50%',
+    left: 0,
+    right: 0,
+    height: 2,
+    backgroundColor: '#fff',
+  },
+  centerCircle: {
+    position: 'absolute',
+    top: '42.5%',
+    left: '40%',
+    width: '25%',
+    height: '15%',
+    borderColor: '#fff',
+    borderWidth: 2,
+    borderRadius: 100,
+  },
+  goalArea: {
+    position: 'absolute',
+    top: 0,
+    left: '40%',
+    width: '20%',
+    height: '2%',
+    zIndex:2,
+    borderColor: '#fff',
+    borderWidth: 2,
+  },
+  penaltyArea: {
+    position: 'absolute',
+    top: 0,
+    left: '30%',
+    zIndex:3,
+    width: '40%',
+    height: "7%",
+    borderColor: '#fff',
+    borderWidth: 2,
+  },
+  player: {
+    width: 25,
+    height: 25,
+    backgroundColor: '#fff',
+  },
+  playerName: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  playerRating: {
+    fontSize: 10,
+    textAlign: 'center',
+  },
+  goalKeeperHomeRow:{
+    flexDirection:"row",
+    backgroundColor:"#C1E2B7",
+    zIndex:1,
+    height:"7%",
+    width:"100%",
+    justifyContent: 'center', 
+    alignItems: 'center'
+  },
+  defenceHomeRow: {
+    flexDirection:"row",
+    zIndex:1,
+    height:"7%",
+    width:"100%",
+    marginTop:20,
+    justifyContent: 'space-between', 
+    alignItems: 'center'
+  },
+  gk: { top: '1%', zIndex:3},
+  lb: { top: '10%', left: '6%' },
+  cb1: { top: '10%', left: '30%' },
+  cb2: { top: '10%', left: '60%' },
+  rb: { top: '10%', left: '84%' },
+  cm1: { top: '20%', left: '30%' },
+  cm2: { top: '20%', left: '60%' },
+  cam: { top: '30%', left: '45%' },
+  lw: { top: '30%', left: '10%' },
+  rw: { top: '30%', left: '80%' },
+  st: { top: '40%', left: '45%' },
+});

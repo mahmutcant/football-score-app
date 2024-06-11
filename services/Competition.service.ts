@@ -2,8 +2,9 @@ const baseUrl = 'https://www.sofascore.com/api/v1/sport';
 import axios from 'axios';
 import { Events } from '../models/competition.model';
 import { DateInformation } from '../helper/utils';
-import { BestPlayer, BestPlayersSummary } from '../models/best-player-models';
+import { BestPlayersSummary } from '../models/best-player-models';
 import { Incidents } from '../models/incidents-model';
+import { LineupsModel } from '../models/lineups.model';
 export const getMatchList = async (todayDate:DateInformation): Promise<Events[]> => {
     try {
         const response = await axios.
@@ -51,6 +52,15 @@ export const getBestPlayers = async(eventId:number) : Promise<BestPlayersSummary
 export const getIncidents = async(eventId: number) : Promise<Incidents> => {
     try{
         const response = await axios.get(`https://www.sofascore.com/api/v1/event/${eventId}/incidents`)
+        return response.data;
+    }catch(error){
+        throw error;
+    }
+}
+
+export const getLineups = async(eventId:number) : Promise<LineupsModel> => {
+    try {
+        const response = await axios.get(`https://www.sofascore.com/api/v1/event/${eventId}/lineups`)
         return response.data;
     }catch(error){
         throw error;

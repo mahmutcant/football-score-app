@@ -6,12 +6,14 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { selectedCompetitionStyles, styles } from './Styles/Styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowLeft, faBell,faShareNodes } from '@fortawesome/free-solid-svg-icons';
-import { getBestPlayers, getIncidents, getSelectedCompetitionDetail, getTeamIcon } from '../services/Competition.service';
+import { getBestPlayers, getIncidents, getLineups, getSelectedCompetitionDetail, getTeamIcon } from '../services/Competition.service';
 import { Events } from '../models/competition.model';
 import { StartTimeModel, convertEpochToDate, getStatusByCode, isCompetitionLive } from '../helper/utils';
 import { BestPlayersSummary } from '../models/best-player-models';
 import SelectedCompetitionIncident from './SelectedCompetitionIncident';
 import { Incident } from '../models/incidents-model';
+import Lineups from './Lineups';
+import { LineupsModel } from '../models/lineups.model';
 
 type RootStackParamList = {
   Home: undefined;
@@ -32,6 +34,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
   const [selectedMenuItem, setSelectedMenuItem] = useState(0);
   const [startDate,setStartDate] = useState<StartTimeModel>();
   const [incidents,setIncidents] = useState<Incident[]>();
+  const [lineups,setLineups] = useState<LineupsModel>();
   const menuButtons = ["Ayrıntılar", "Kadrolar", "Puan Durumu", "İstatistik", "Maçlar"];
   useEffect(() => {
     getSelectedCompetitionDetail(competitionId).then((data) => {
@@ -40,6 +43,9 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
     getIncidents(competitionId).then((data) => {
       setIncidents(data.incidents);
     })
+    getLineups(competitionId).then((data) => {
+      setLineups(data)
+    })
   }, []);
 
   useEffect(() => {
@@ -47,7 +53,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
       setBestPlayers(data);
     })
   }, [competitionId])
-  
+
   useEffect(() => {
     if(selectedCompetitionInfo?.startTimestamp){
       setStartDate(convertEpochToDate(selectedCompetitionInfo!.startTimestamp))
@@ -59,7 +65,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
       case 0:
         return <SelectedCompetitionIncident incidents={incidents!} bestPlayers={bestPlayers!}/>
       case 1:
-        return <View><Text>öteki açılacak</Text></View>
+        return <Lineups />
     }
   }
   
