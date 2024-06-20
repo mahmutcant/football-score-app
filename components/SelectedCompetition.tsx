@@ -65,7 +65,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
       case 0:
         return <SelectedCompetitionIncident incidents={incidents!} bestPlayers={bestPlayers!}/>
       case 1:
-        return <Lineups />
+        return <Lineups linupsDetail={lineups!} eventId={competitionId}/>
     }
   }
   

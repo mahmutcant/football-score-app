@@ -80,3 +80,4 @@ To learn more about React Native, take a look at the following resources:
 - ![image info](./score_app.png)
 - ![image info](./selectedcompetition.png)
 - ![image info](./substitution.png)
+- ![image info](./lineups.png)
