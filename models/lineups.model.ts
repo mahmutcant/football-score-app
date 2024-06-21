@@ -39,24 +39,24 @@ export interface Player {
         marketValueCurrency:string;
         dateOfBirthTimestamp: number;
         shirtNumber: number;
-        substitute: boolean;
-        statistics: {
-            totalPass:number;
-            accuratePass:number;
-            totalLongBalls:number;
-            accurateLongBalls:number;
-            goalAssist:number;
-            totalClearance:number;
-            savedShotsFromInsideTheBox:number;
-            saves:number;
-            punches:number;
-            minutesPlayed:number;
-            touches:number;
-            rating:number;
-            possessionLostCtrl:number,
-            ratingVersions: {
-                original: number;
-            };
-        }
     }
+    statistics: {
+        totalPass:number;
+        accuratePass:number;
+        totalLongBalls:number;
+        accurateLongBalls:number;
+        goalAssist:number;
+        totalClearance:number;
+        savedShotsFromInsideTheBox:number;
+        saves:number;
+        punches:number;
+        minutesPlayed:number;
+        touches:number;
+        rating:number;
+        possessionLostCtrl:number,
+        ratingVersions: {
+            original: number;
+        };
+    }
+    substitute: boolean;
 }

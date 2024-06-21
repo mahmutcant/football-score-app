@@ -6,8 +6,20 @@
       "sha1": "77372cd19dbe1121c9eb0dcbf266dc216ae6c461"
     },
     {
+      "path": "assets/fonts/SofascoreSans-BoldCondensed.ttf",
+      "sha1": "be0b4fa676b321ad4a107a61da9e362a0ea43024"
+    },
+    {
+      "path": "assets/fonts/SofascoreSans-Medium.ttf",
+      "sha1": "7c2c7081fa845d31cbcd0b142f655ab6c6c32399"
+    },
+    {
       "path": "assets/fonts/SofascoreSans-Regular.ttf",
       "sha1": "c76e8273190e30e2eeba91751629e0ef8a87003a"
+    },
+    {
+      "path": "assets/fonts/SofascoreSans-RegularCondensed.ttf",
+      "sha1": "66ff1248e776351b9ed138921f208fa1ae546b12"
     }
   ]
 }

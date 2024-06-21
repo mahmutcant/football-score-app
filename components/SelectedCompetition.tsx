@@ -35,6 +35,8 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
   const [startDate,setStartDate] = useState<StartTimeModel>();
   const [incidents,setIncidents] = useState<Incident[]>();
   const [lineups,setLineups] = useState<LineupsModel>();
+  const [substitute,setSubstitute] = useState<Incident[]>();
+  const [goals,setGoals] = useState<Incident[]>();
   const menuButtons = ["Ayrıntılar", "Kadrolar", "Puan Durumu", "İstatistik", "Maçlar"];
   useEffect(() => {
     getSelectedCompetitionDetail(competitionId).then((data) => {
@@ -42,6 +44,8 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
     })
     getIncidents(competitionId).then((data) => {
       setIncidents(data.incidents);
+      setSubstitute(data.incidents.filter(x => x.incidentType === "substitution"))
+      setGoals(data.incidents.filter(x => x.incidentType === "goal"))
     })
     getLineups(competitionId).then((data) => {
       setLineups(data)
@@ -52,7 +56,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
     getBestPlayers(competitionId).then((data) => {
       setBestPlayers(data);
     })
-  }, [competitionId])
+  }, [competitionId]) 
 
   useEffect(() => {
     if(selectedCompetitionInfo?.startTimestamp){
@@ -65,7 +69,7 @@ const SelectedCompetition: React.FC<Props> = ({ route }: Props) => {
       case 0:
         return <SelectedCompetitionIncident incidents={incidents!} bestPlayers={bestPlayers!}/>
       case 1:
-        return <Lineups linupsDetail={lineups!} eventId={competitionId}/>
+        return <Lineups linupsDetail={lineups!} eventId={competitionId} substitute={substitute!} goals={goals!}/>
     }
   }
   

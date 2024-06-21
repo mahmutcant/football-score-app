@@ -261,7 +261,12 @@ export const selectedCompetitionStyles = StyleSheet.create({
     fontFamily:'SofascoreSans-Regular',
     fontSize:15,
     alignSelf:'center',
-    
+  },
+  bestPlayersStylesInLineups: {
+    color:'white',
+    fontFamily:'SofascoreSans-BoldCondensed',
+    fontSize:14,
+    textAlign:'center',
   },
   bestPlayersTextStyles:{
     color:'#929397',
@@ -306,10 +311,11 @@ export const lineupsStyle = StyleSheet.create({
   },
   field: {
     width: "100%",
-    height: 700,
+    height: 800,
     backgroundColor: '#CCEDC0',
     position: 'relative',
     borderColor: '#fff',
+    marginBottom:400,
     borderWidth: 2,
     borderRadius: 10,
   },

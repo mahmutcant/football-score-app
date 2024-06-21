@@ -51,6 +51,9 @@
 	<array>
 		<string>SofascoreSans-Bold.ttf</string>
 		<string>SofascoreSans-Regular.ttf</string>
+		<string>SofascoreSans-BoldCondensed.ttf</string>
+		<string>SofascoreSans-RegularCondensed.ttf</string>
+		<string>SofascoreSans-Medium.ttf</string>
 	</array>
 </dict>
 </plist>
